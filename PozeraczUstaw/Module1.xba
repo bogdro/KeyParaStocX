@@ -14,6 +14,8 @@
 &apos;  http://www.oooforum.org/forum/viewtopic.phtml?t=10650
 &apos;  http://wiki.services.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions
 &apos;  http://wiki.services.openoffice.org/wiki/Extensions
+&apos;  http://api.openoffice.org/docs/common/ref/com/sun/star/text/ContentIndex.html
+&apos;  http://api.openoffice.org/docs/common/ref/com/sun/star/text/BaseIndex.html
 
 Dim Doc as object
 Dim replaceDesc as object
@@ -146,6 +148,7 @@ Sub DodajSpis
 		DocIndex = Doc.createInstance (&quot;com.sun.star.text.ContentIndex&quot;)
 		Cursor.gotoStart (False)
 		DocIndex.createFromOutline = True
+		DocIndex.IsProtected = False
 		Doc.Text.insertTextContent (Cursor, DocIndex, False)
 		&apos; nie mozna wstawic przejscia do nowej strony, wiec ustawiamy, ze kursor
 		&apos; ma to wstawic i wstawiamy cokolwiek w kursorze (nowy paragaf jest neutralny)
