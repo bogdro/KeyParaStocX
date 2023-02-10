@@ -1,0 +1,10 @@
+2011-06-06	Bogdan Drozdowski <bogdandr@op.pl>
+
+	* Po¿eracz ustaw 0.1.0:
+	  Wersja wstêpna: wyszukuje czê¶ci, ksiêgi, tytu³y, dzia³y, rozdzia³y,
+	  oddzia³y i artyku³y, zmienia im styl na odpowiedni nag³ówek i tworzy
+	  z nich spis tre¶ci. Je¶li nie znaleziono artyku³ów, przechodzi w
+	  tryb rozporz±dzenia i ostatni poziom spisu tre¶ci zajmuj± paragrafy.
+	  Pomijane s± paragrafy/artyku³y znajduj±ce siê w komórkach tabel
+	  (powoduj± b³êdy). Po spisie tre¶ci jest wstawiane prze³amanie
+	  strony, a numeracja stron dalszych zaczyna siê od 1.

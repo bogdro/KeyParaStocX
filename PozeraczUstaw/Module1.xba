@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:language="StarBasic">Option Explicit
+
+&apos;  http://wiki.services.openoffice.org/wiki/Documentation/DevGuide/Text/Overall_Document_Features
+&apos;  http://wiki.services.openoffice.org/wiki/Documentation/BASIC_Guide/Editing_Text_Documents
+&apos;  http://wiki.services.openoffice.org/wiki/Extensions_development_basic
+&apos;  http://hektor.umcs.lublin.pl/~mikosmul/computing/articles/openoffice-macros.html
+&apos;  http://codesnippets.services.openoffice.org/Writer/Writer.InsertModifyContentTable.snip
+&apos;  http://wiki.services.openoffice.org/wiki/Documentation/How_Tos/Regular_Expressions_in_Writer
+&apos;  http://www.oooforum.org/forum/viewtopic.phtml?p=345031
+&apos;  http://api.openoffice.org/docs/common/ref/com/sun/star/style/ParagraphProperties.html#ParaStyleName
+&apos;  http://user.services.openoffice.org/en/forum/viewtopic.php?f=45&amp;t=21732
+&apos;  http://www.oooforum.org/forum/viewtopic.phtml?t=10650
+&apos;  http://wiki.services.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions
+&apos;  http://wiki.services.openoffice.org/wiki/Extensions
+
+Dim Doc as object
+Dim replaceDesc as object
+Dim find as object
+Dim i as Integer
+Dim f as object
+Dim Cursor as object
+Dim DocIndices as object
+Dim hasIndex as Boolean
+Dim DocIndex as object
+
+Sub Main
+
+	&apos; najpierw zamieniamy wyrazy, potem robimy nowe paragrafy (w artykulach)
+	Zamien (&quot;Część&quot;   , &quot;Nagłówek 1&quot;)
+	Zamien (&quot;Księga&quot;  , &quot;Nagłówek 2&quot;)
+	Zamien (&quot;Tytuł&quot;   , &quot;Nagłówek 3&quot;)
+	Zamien (&quot;Dział&quot;   , &quot;Nagłówek 4&quot;)
+	Zamien (&quot;Rozdział&quot;, &quot;Nagłówek 5&quot;)
+	Zamien (&quot;Oddział&quot; , &quot;Nagłówek 6&quot;)
+	ZamienArtykuly
+	DodajSpis
+
+	msgbox &quot;Skończyłem :)&quot;
+
+End Sub
+
+Sub Zamien (slowo as string, styl as string)
+
+	Doc = ThisComponent
+
+	replaceDesc = Doc.createReplaceDescriptor
+	replaceDesc.searchRegularExpression = True
+	replaceDesc.searchCaseSensitive = True
+	replaceDesc.SearchAll = True
+	&apos; &quot;\&gt;&quot; = koniec slowa
+	&apos; tabulacja tez jest potrzebna, mimo \t
+	replaceDesc.searchString = &quot;^[ \t\s	]*&quot; &amp; slowo &amp; &quot;\&gt;&quot;
+
+	&apos; &quot;replaceAll&quot; nie dziala, nie mozna zmienic stylu paragrafu
+	find = doc.FindAll (replaceDesc)
+	For i = 0 to find.Count - 1
+
+		f = find.getByIndex (i)
+		f.ParaStyleName = styl
+
+	Next
+
+End Sub
+
+Sub ZamienArtykuly
+
+	Doc = ThisComponent
+
+	replaceDesc = Doc.createReplaceDescriptor
+	replaceDesc.searchRegularExpression = True
+	replaceDesc.searchCaseSensitive = True
+	replaceDesc.SearchAll = True
+	replaceDesc.searchString = &quot;^[ \t\s	]*Art\.[ \t\s	]+[0-9]+[a-zA-Z]*\.?[ \t\s	]+(\[([^\]])+\])&quot;
+
+	&apos; &quot;replaceAll&quot; nie dziala, nie mozna zmienic stylu paragrafu
+	find = doc.FindAll (replaceDesc)
+	Cursor = Doc.Text.createTextCursor
+	For i = 0 to find.Count - 1
+
+		f = find.getByIndex (i)
+		&apos; jak paragraf jest w tabeli (np. wstep ustawy), to nie dosc, ze
+		&apos; robi to problemy, to i tak nie mamy tego obrabiac, wiec omijamy
+		If IsEmpty (f.Cell) Then
+			Cursor.gotoRange (f.end, False)
+			Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
+			f.ParaStyleName = &quot;Nagłówek 7&quot;
+		End If
+
+	Next
+
+	If find.Count = 0 Then
+
+		&apos; nie znaleziono artykulow - prawdopodobnie rozporzadzenie (czyli zamieniac paragrafy)
+		replaceDesc = Doc.createReplaceDescriptor
+		replaceDesc.searchRegularExpression = True
+		replaceDesc.searchCaseSensitive = True
+		replaceDesc.SearchAll = True
+		replaceDesc.searchString = &quot;^[ \t\s	]*§[ \t\s	]*[0-9]+[a-zA-Z]*\.?([ \t\s	]+(\[([^\]])+\]))?&quot;
+
+		&apos; &quot;replaceAll&quot; nie dziala, nie mozna zmienic stylu paragrafu
+		find = doc.FindAll (replaceDesc)
+&apos;		Cursor = Doc.Text.createTextCursor
+		For i = 0 to find.Count - 1
+
+			f = find.getByIndex (i)
+			&apos; jak paragraf jest w tabeli (np. wstep ustawy), to nie dosc, ze
+			&apos; robi to problemy, to i tak nie mamy tego obrabiac, wiec omijamy
+			If IsEmpty (f.Cell) Then
+				Cursor.gotoRange (f.end, False)
+				Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
+				f.ParaStyleName = &quot;Nagłówek 7&quot;
+			End If
+
+		Next
+
+	End If
+
+End Sub
+
+Sub DodajSpis
+
+	Doc = ThisComponent
+	Cursor = Doc.Text.createTextCursor
+
+	DocIndices = Doc.getDocumentIndexes ()
+	hasIndex = False
+
+	&apos; sprawdzamy, czy spis juz nie istnieje
+	For i = 0 to DocIndices.getCount () - 1
+
+		DocIndex = DocIndices.getByIndex (i)
+		If DocIndex.supportsService (&quot;com.sun.star.text.ContentIndex&quot;) Then
+
+			hasIndex = True
+			Exit For
+
+		End If
+
+	Next
+
+	If Not hasIndex Then
+
+		&apos; nie ma spisu - wstaw nowy
+		DocIndex = Doc.createInstance (&quot;com.sun.star.text.ContentIndex&quot;)
+		Cursor.gotoStart (False)
+		DocIndex.createFromOutline = True
+		Doc.Text.insertTextContent (Cursor, DocIndex, False)
+		&apos; nie mozna wstawic przejscia do nowej strony, wiec ustawiamy, ze kursor
+		&apos; ma to wstawic i wstawiamy cokolwiek w kursorze (nowy paragaf jest neutralny)
+		Cursor.BreakType = com.sun.star.style.BreakType.PAGE_AFTER
+		Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
+
+		&apos; strony po spisie numeruj od 1
+		Cursor.PageDescName = Cursor.PageStyleName
+		Cursor.gotoStartOfParagraph (False)
+		Cursor.gotoEndOfParagraph (True)
+		Cursor.PageNumberOffset = 1
+
+	End If
+
+	&apos; trzeba dwa razy, inaczej numery stron sa zle
+	DocIndex.update ()
+	DocIndex.update ()
+
+End Sub
+
+
+</script:module>

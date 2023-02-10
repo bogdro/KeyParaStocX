@@ -1,0 +1,6 @@
+Pożeracz Ustaw 0.1.0
+Copyright (c) 2011  Bogdan Drozdowski
+
+Programik wyszukujący charakterystyczne elementy ustaw i rozporządzeń i tworzący z nich spis treści.
+
+
