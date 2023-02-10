@@ -1,6 +1,4 @@
-Pożeracz Ustaw 0.2.0
-Copyright (c) 2011  Bogdan Drozdowski
+KeyParaStocX 0.4.0
+Copyright (c) 2011-2022  Bogdan Drozdowski
 
-Programik wyszukujący charakterystyczne elementy ustaw i rozporządzeń i tworzący z nich spis treści.
-
-
+A program that searches for typical Polish legal act parts and build a Table of Contents from them.

@@ -1,0 +1,4 @@
+KeyParaStocX 0.4.0
+Copyright (c) 2011-2022  Bogdan Drozdowski
+
+Programik wyszukujący charakterystyczne elementy ustaw i rozporządzeń i tworzący z nich spis treści.

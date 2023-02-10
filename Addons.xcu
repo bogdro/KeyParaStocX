@@ -6,15 +6,15 @@
  oor:package="org.openoffice.Office">
 	<node oor:name="AddonUI">
 		<node oor:name="AddonMenu">
-				<node oor:name="PozeraczUstaw.AddonMenu.m1" oor:op="replace">
+				<node oor:name="KeyParaStocX.AddonMenu.m1" oor:op="replace">
 					<prop oor:name="Context" oor:type="xs:string">
 						<value>com.sun.star.text.TextDocument</value>
 					</prop>
 					<prop oor:name="URL" oor:type="xs:string">
-						<value>vnd.sun.star.script:PozeraczUstaw.Module1.Main?language=Basic&amp;location=application</value>
+						<value>vnd.sun.star.script:KeyParaStocX.Module1.Main?language=Basic&amp;location=application</value>
 					</prop>
 					<prop oor:name="Title" oor:type="xs:string">
-						<value>Pożeracz Ustaw</value>
+						<value>KeyParaStocX</value>
 					</prop>
 					<prop oor:name="Target" oor:type="xs:string">
 						<value>_self</value>

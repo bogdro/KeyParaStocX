@@ -3,8 +3,8 @@
  xmlns="http://openoffice.org/extensions/description/2006"
  xmlns:dep="http://openoffice.org/extensions/description/2006"
  xmlns:xlink="http://www.w3.org/1999/xlink">
-	<identifier value="vnd.basicaddonbuilder.pozeraczustaw"/>
-	<version value="0.2.0"/>
+	<identifier value="vnd.bogdandrozdowski.keyparastocx"/>
+	<version value="0.4.0"/>
 	<!-- <dependencies>
 		<OpenOffice.org-minimal-version value="2.1" dep:name="OpenOffice.org 2.1"/>
 	</dependencies> -->
@@ -16,8 +16,8 @@
   </publisher>
 
   <display-name>
-    <name lang="pl">Pożeracz ustaw</name>
-    <name lang="en">Bill eater</name>
+    <name lang="en">KeyParaStocX</name>
+    <name lang="pl">KeyParaStocX (Pożeracz ustaw)</name>
   </display-name>
 
 </description>

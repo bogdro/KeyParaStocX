@@ -1,15 +1,22 @@
-2011-06-11	Bogdan Drozdowski <bogdandr@op.pl>
+2022-02-10	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
-	* Po¿eracz ustaw 0.2.0:
-	  Spis tre¶ci nie jest chroniony przed rêcznymi zmianami.
+	* KeyParaStocX 0.4.0:
+	  Renamed the extension and translated to English. Other small changes.
+	* Module1.xba: updated the links.
 
-2011-06-06	Bogdan Drozdowski <bogdandr@op.pl>
+2011-06-11	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
-	* Po¿eracz ustaw 0.1.0:
-	  Wersja wstêpna: wyszukuje czê¶ci, ksiêgi, tytu³y, dzia³y, rozdzia³y,
-	  oddzia³y i artyku³y, zmienia im styl na odpowiedni nag³ówek i tworzy
-	  z nich spis tre¶ci. Je¶li nie znaleziono artyku³ów, przechodzi w
-	  tryb rozporz±dzenia i ostatni poziom spisu tre¶ci zajmuj± paragrafy.
-	  Pomijane s± paragrafy/artyku³y znajduj±ce siê w komórkach tabel
-	  (powoduj± b³êdy). Po spisie tre¶ci jest wstawiane prze³amanie
-	  strony, a numeracja stron dalszych zaczyna siê od 1.
+	* KeyParaStocX (then - Pozeracz ustaw) 0.2.0:
+	  The Table of Contents is no longer protected from manual changes.
+
+2011-06-06	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+
+	* KeyParaStocX (then - Pozeracz ustaw) 0.1.0:
+	  Initial version: finds Parts, Books, Titles, Sections, Chapters,
+	  Subchapters and Articles, changes their style to an appropriate
+	  header and generates the table of contents from them. If no Articles
+	  are found, the last level of the ToC are Paragraphs.
+	  Paragraphs and Articles inside table cells are skipped (they cause
+	  errors).
+	  After the ToC, a page break is inserted and the following pages are
+	  numbered from 1.

@@ -2,20 +2,18 @@
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
 <script:module xmlns:script="http://openoffice.org/2000/script" script:name="Module1" script:language="StarBasic">Option Explicit
 
-&apos;  http://wiki.services.openoffice.org/wiki/Documentation/DevGuide/Text/Overall_Document_Features
-&apos;  http://wiki.services.openoffice.org/wiki/Documentation/BASIC_Guide/Editing_Text_Documents
-&apos;  http://wiki.services.openoffice.org/wiki/Extensions_development_basic
-&apos;  http://hektor.umcs.lublin.pl/~mikosmul/computing/articles/openoffice-macros.html
-&apos;  http://codesnippets.services.openoffice.org/Writer/Writer.InsertModifyContentTable.snip
-&apos;  http://wiki.services.openoffice.org/wiki/Documentation/How_Tos/Regular_Expressions_in_Writer
-&apos;  http://www.oooforum.org/forum/viewtopic.phtml?p=345031
-&apos;  http://api.openoffice.org/docs/common/ref/com/sun/star/style/ParagraphProperties.html#ParaStyleName
-&apos;  http://user.services.openoffice.org/en/forum/viewtopic.php?f=45&amp;t=21732
-&apos;  http://www.oooforum.org/forum/viewtopic.phtml?t=10650
-&apos;  http://wiki.services.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions
-&apos;  http://wiki.services.openoffice.org/wiki/Extensions
-&apos;  http://api.openoffice.org/docs/common/ref/com/sun/star/text/ContentIndex.html
-&apos;  http://api.openoffice.org/docs/common/ref/com/sun/star/text/BaseIndex.html
+&apos;  https://wiki.openoffice.org/wiki/Documentation/DevGuide/Text/Overall_Document_Features
+&apos;  https://wiki.openoffice.org/wiki/Documentation/BASIC_Guide/Editing_Text_Documents
+&apos;  https://wiki.openoffice.org/wiki/Extensions_development_basic
+&apos;  https://wiki.openoffice.org/wiki/Documentation/How_Tos/Regular_Expressions_in_Writer
+&apos;  https://www.openoffice.org/api/docs/common/ref/com/sun/star/style/ParagraphProperties.html#ParaStyleName
+&apos;  https://forum.openoffice.org//en/forum/viewtopic.php?f=45&amp;t=21732
+&apos;  https://wiki.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions
+&apos;  https://wiki.openoffice.org/wiki/Extensions
+&apos;  https://www.openoffice.org/api/docs/common/ref/com/sun/star/text/ContentIndex.html
+&apos;  https://www.openoffice.org/api/docs/common/ref/com/sun/star/text/BaseIndex.html
+&apos;  https://wiki.documentfoundation.org/Development/Create_a_Hello_World_LibreOffice_extension
+&apos;  https://wiki.openoffice.org/wiki/Extensions_development
 
 Dim Doc as object
 Dim replaceDesc as object
@@ -29,21 +27,21 @@ Dim DocIndex as object
 
 Sub Main
 
-	&apos; najpierw zamieniamy wyrazy, potem robimy nowe paragrafy (w artykulach)
-	Zamien (&quot;Część&quot;   , &quot;Nagłówek 1&quot;)
-	Zamien (&quot;Księga&quot;  , &quot;Nagłówek 2&quot;)
-	Zamien (&quot;Tytuł&quot;   , &quot;Nagłówek 3&quot;)
-	Zamien (&quot;Dział&quot;   , &quot;Nagłówek 4&quot;)
-	Zamien (&quot;Rozdział&quot;, &quot;Nagłówek 5&quot;)
-	Zamien (&quot;Oddział&quot; , &quot;Nagłówek 6&quot;)
-	ZamienArtykuly
-	DodajSpis
+	&apos; first, change the words, then make new paragraphs (in the Articles)
+	ChangeWordParaStyle (&quot;Część&quot;   , &quot;Nagłówek 1&quot;)
+	ChangeWordParaStyle (&quot;Księga&quot;  , &quot;Nagłówek 2&quot;)
+	ChangeWordParaStyle (&quot;Tytuł&quot;   , &quot;Nagłówek 3&quot;)
+	ChangeWordParaStyle (&quot;Dział&quot;   , &quot;Nagłówek 4&quot;)
+	ChangeWordParaStyle (&quot;Rozdział&quot;, &quot;Nagłówek 5&quot;)
+	ChangeWordParaStyle (&quot;Oddział&quot; , &quot;Nagłówek 6&quot;)
+	ChangeArticles
+	AddTableOfContents
 
-	msgbox &quot;Skończyłem :)&quot;
+	msgbox &quot;Done :)&quot;
 
 End Sub
 
-Sub Zamien (slowo as string, styl as string)
+Sub ChangeWordParaStyle (theWord as string, newStyle as string)
 
 	Doc = ThisComponent
 
@@ -51,22 +49,22 @@ Sub Zamien (slowo as string, styl as string)
 	replaceDesc.searchRegularExpression = True
 	replaceDesc.searchCaseSensitive = True
 	replaceDesc.SearchAll = True
-	&apos; &quot;\&gt;&quot; = koniec slowa
-	&apos; tabulacja tez jest potrzebna, mimo \t
-	replaceDesc.searchString = &quot;^[ \t\s	]*&quot; &amp; slowo &amp; &quot;\&gt;&quot;
+	&apos; &quot;\&gt;&quot; = the end of a word
+	&apos; the tab is also needed, despite the \t
+	replaceDesc.searchString = &quot;^[ \t\s	]*&quot; &amp; theWord &amp; &quot;\&gt;&quot;
 
-	&apos; &quot;replaceAll&quot; nie dziala, nie mozna zmienic stylu paragrafu
+	&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
 	find = doc.FindAll (replaceDesc)
 	For i = 0 to find.Count - 1
 
 		f = find.getByIndex (i)
-		f.ParaStyleName = styl
+		f.ParaStyleName = newStyle
 
 	Next
 
 End Sub
 
-Sub ZamienArtykuly
+Sub ChangeArticles
 
 	Doc = ThisComponent
 
@@ -76,14 +74,14 @@ Sub ZamienArtykuly
 	replaceDesc.SearchAll = True
 	replaceDesc.searchString = &quot;^[ \t\s	]*Art\.[ \t\s	]+[0-9]+[a-zA-Z]*\.?[ \t\s	]+(\[([^\]])+\])&quot;
 
-	&apos; &quot;replaceAll&quot; nie dziala, nie mozna zmienic stylu paragrafu
+	&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
 	find = doc.FindAll (replaceDesc)
 	Cursor = Doc.Text.createTextCursor
 	For i = 0 to find.Count - 1
 
 		f = find.getByIndex (i)
-		&apos; jak paragraf jest w tabeli (np. wstep ustawy), to nie dosc, ze
-		&apos; robi to problemy, to i tak nie mamy tego obrabiac, wiec omijamy
+		&apos; If a Paragraph is in a table, it generates problems,
+		&apos; but we don&apos;t need to process it anyway, so we skip.
 		If IsEmpty (f.Cell) Then
 			Cursor.gotoRange (f.end, False)
 			Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
@@ -94,21 +92,21 @@ Sub ZamienArtykuly
 
 	If find.Count = 0 Then
 
-		&apos; nie znaleziono artykulow - prawdopodobnie rozporzadzenie (czyli zamieniac paragrafy)
+		&apos; no Articles found - change the Paragraphs instead
 		replaceDesc = Doc.createReplaceDescriptor
 		replaceDesc.searchRegularExpression = True
 		replaceDesc.searchCaseSensitive = True
 		replaceDesc.SearchAll = True
 		replaceDesc.searchString = &quot;^[ \t\s	]*§[ \t\s	]*[0-9]+[a-zA-Z]*\.?([ \t\s	]+(\[([^\]])+\]))?&quot;
 
-		&apos; &quot;replaceAll&quot; nie dziala, nie mozna zmienic stylu paragrafu
+		&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
 		find = doc.FindAll (replaceDesc)
 &apos;		Cursor = Doc.Text.createTextCursor
 		For i = 0 to find.Count - 1
 
 			f = find.getByIndex (i)
-			&apos; jak paragraf jest w tabeli (np. wstep ustawy), to nie dosc, ze
-			&apos; robi to problemy, to i tak nie mamy tego obrabiac, wiec omijamy
+			&apos; If a Paragraph is in a table, it generates problems,
+			&apos; but we don&apos;t need to process it anyway, so we skip.
 			If IsEmpty (f.Cell) Then
 				Cursor.gotoRange (f.end, False)
 				Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
@@ -121,7 +119,7 @@ Sub ZamienArtykuly
 
 End Sub
 
-Sub DodajSpis
+Sub AddTableOfContents
 
 	Doc = ThisComponent
 	Cursor = Doc.Text.createTextCursor
@@ -129,7 +127,7 @@ Sub DodajSpis
 	DocIndices = Doc.getDocumentIndexes ()
 	hasIndex = False
 
-	&apos; sprawdzamy, czy spis juz nie istnieje
+	&apos; check if a Table of Contents already exists
 	For i = 0 to DocIndices.getCount () - 1
 
 		DocIndex = DocIndices.getByIndex (i)
@@ -144,18 +142,18 @@ Sub DodajSpis
 
 	If Not hasIndex Then
 
-		&apos; nie ma spisu - wstaw nowy
+		&apos; no Table of Contents - add a new one
 		DocIndex = Doc.createInstance (&quot;com.sun.star.text.ContentIndex&quot;)
 		Cursor.gotoStart (False)
 		DocIndex.createFromOutline = True
 		DocIndex.IsProtected = False
 		Doc.Text.insertTextContent (Cursor, DocIndex, False)
-		&apos; nie mozna wstawic przejscia do nowej strony, wiec ustawiamy, ze kursor
-		&apos; ma to wstawic i wstawiamy cokolwiek w kursorze (nowy paragaf jest neutralny)
+		&apos; cannot insert a page break, so we set that the Cursor inserts it
+		&apos; and we input anything in the Cursor (a new paragraph is neutral)
 		Cursor.BreakType = com.sun.star.style.BreakType.PAGE_AFTER
 		Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
 
-		&apos; strony po spisie numeruj od 1
+		&apos; number the pages after the ToC from 1
 		Cursor.PageDescName = Cursor.PageStyleName
 		Cursor.gotoStartOfParagraph (False)
 		Cursor.gotoEndOfParagraph (True)
@@ -163,7 +161,7 @@ Sub DodajSpis
 
 	End If
 
-	&apos; trzeba dwa razy, inaczej numery stron sa zle
+	&apos; need to do this twice, otherwise the page numbers are wrong
 	DocIndex.update ()
 	DocIndex.update ()
 
