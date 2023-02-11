@@ -4,15 +4,21 @@
  xmlns:dep="http://openoffice.org/extensions/description/2006"
  xmlns:xlink="http://www.w3.org/1999/xlink">
 	<identifier value="vnd.bogdandrozdowski.keyparastocx"/>
-	<version value="0.4.0"/>
+	<icon>
+		<default xlink:href="icons/KeyParaStocX-icon.svg" />
+	</icon>
+	<version value="0.6.0"/>
 	<!-- <dependencies>
 		<OpenOffice.org-minimal-version value="2.1" dep:name="OpenOffice.org 2.1"/>
 	</dependencies> -->
 	<registration>
+		<simple-license accept-by="admin" default-license-id="ID0" suppress-on-update="true" >
+			<license-text xlink:href="COPYING" lang="en" license-id="ID0" />
+		</simple-license>
 	</registration>
 
   <publisher>
-    <name>Bogdan Drozdowski</name>
+    <name xlink:href="mailto:bogdro@users.sourceforge.net">Bogdan Drozdowski</name>
   </publisher>
 
   <display-name>

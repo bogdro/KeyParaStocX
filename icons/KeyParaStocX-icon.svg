@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="128.0px"
+   height="128.0px"
+   viewBox="0 0 128.0 128.0"
+   version="1.1"
+   id="SVGRoot"
+   sodipodi:docname="KeyParaStocX-icon.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview829"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="1.8173401"
+     inkscape:cx="35.491431"
+     inkscape:cy="56.676239"
+     inkscape:window-width="1366"
+     inkscape:window-height="701"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid892" />
+  </sodipodi:namedview>
+  <defs
+     id="defs824">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect18710"
+       is_visible="true"
+       lpeversion="1" />
+  </defs>
+  <g
+     inkscape:label="Warstwa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans'"
+       x="-0.60854155"
+       y="92.59198"
+       id="text2129"><tspan
+         sodipodi:role="line"
+         id="tspan2127"
+         x="-0.60854155"
+         y="92.59198">§</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:45.5016px;line-height:1.25;font-family:sans-serif;stroke-width:1"
+       x="34.17577"
+       y="35.000809"
+       id="text12579"
+       transform="scale(1.1926651,0.83845836)"><tspan
+         sodipodi:role="line"
+         id="tspan12577"
+         x="34.17577"
+         y="35.000809"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:45.5016px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;stroke-width:1">1.</tspan><tspan
+         sodipodi:role="line"
+         x="34.17577"
+         y="91.877823"
+         id="tspan12581"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:45.5016px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;stroke-width:1">2.</tspan><tspan
+         sodipodi:role="line"
+         x="34.17577"
+         y="148.75484"
+         id="tspan12583"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:45.5016px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;stroke-width:1">3.</tspan></text>
+    <rect
+       style="fill:#ffffff;stroke:#000080;stroke-width:3.77952756;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect18549"
+       width="38.404213"
+       height="38.404213"
+       x="80.719086"
+       y="44.401466" />
+    <path
+       style="fill:none;stroke:#008000;stroke-width:7.55905512;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 72.509933,36.889368 93.019954,65.878682 121.09117,15.552001"
+       id="path18708"
+       inkscape:path-effect="#path-effect18710"
+       inkscape:original-d="m 72.509933,36.889368 c 6.837674,9.664105 20.510021,28.989314 20.510021,28.989314 0,0 28.071216,-50.326681 28.071216,-50.326681" />
+  </g>
+</svg>

@@ -1,4 +1,7 @@
-KeyParaStocX 0.4.0
+KeyParaStocX 0.6.0
 Copyright (c) 2011-2022  Bogdan Drozdowski
 
-A program that searches for typical Polish legal act parts and build a Table of Contents from them.
+KeyParaStocX (Keyword-based Paragraph Styling and Table of Contents eXtension)
+is a program that searches for typical parts of old-style Polish legal acts
+and builds a Table of Contents for them.
+The extension was formerly called "Pożeracz ustaw" or "PozeraczUstaw".

@@ -1,3 +1,14 @@
+2022-02-11	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+
+	* KeyParaStocX 0.6.0:
+	  Added a toolbar button, an icon and a license.
+	* pkg-desc/pkg-description*: Updated the descriptions.
+	* Addons.xcu: Added a toolbar button.
+	* icons/KeyParaStocX-icon.svg: A new icon, created with Inkscape(tm)
+	  (https://inkscape.org).
+	* COPYING, description.xml: Added a license file.
+	* NEWS, AUTHORS: Added some of the typical distribution files.
+
 2022-02-10	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
 	* KeyParaStocX 0.4.0:
