@@ -1,4 +1,18 @@
-2022-02-11	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+2023-02-12	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+
+	* KeyParaStocX 0.7.0:
+	  Added the README and INSTALL files. Added a Makefile. Updated
+	  descriptions and copyright. Checked compatibility with Apache
+	  OpenOffice.
+	* Makefile: Added a Makefile for building packages and installing the
+	  extension.
+	* pkg-desc/pkg-description*: Updated the description and the copyright
+	  statements. The version is now set from the Makefile.
+	* description.xml: The version is now set from the Makefile.
+	* README: Added a simple README for the extension.
+	* INSTALL: Added installation instructions for the extension.
+
+2023-02-11	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
 	* KeyParaStocX 0.6.0:
 	  Added a toolbar button, an icon and a license.
@@ -9,7 +23,7 @@
 	* COPYING, description.xml: Added a license file.
 	* NEWS, AUTHORS: Added some of the typical distribution files.
 
-2022-02-10	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+2023-02-10	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
 	* KeyParaStocX 0.4.0:
 	  Renamed the extension and translated to English. Other small changes.
@@ -25,7 +39,7 @@
 	* KeyParaStocX (then - Pozeracz ustaw) 0.1.0:
 	  Initial version: finds Parts, Books, Titles, Sections, Chapters,
 	  Subchapters and Articles, changes their style to an appropriate
-	  header and generates the table of contents from them. If no Articles
+	  header and generates the Table of Contents from them. If no Articles
 	  are found, the last level of the ToC are Paragraphs.
 	  Paragraphs and Articles inside table cells are skipped (they cause
 	  errors).
