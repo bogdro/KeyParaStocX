@@ -7,7 +7,7 @@
 	<icon>
 		<default xlink:href="icons/KeyParaStocX-icon.svg" />
 	</icon>
-	<version value="0.6.0"/>
+	<version value="@@VERSION@@"/>
 	<!-- <dependencies>
 		<OpenOffice.org-minimal-version value="2.1" dep:name="OpenOffice.org 2.1"/>
 	</dependencies> -->

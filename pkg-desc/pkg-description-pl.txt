@@ -1,4 +1,4 @@
-KeyParaStocX 0.6.0 (dawniej: Pożeracz ustaw)
+KeyParaStocX @@VERSION@@ (dawniej: Pożeracz ustaw)
 Copyright (c) 2011-2023  Bogdan Drozdowski
 
 KeyParaStocX (Keyword-based Paragraph Styling and Table of Contents eXtension)
