@@ -37,7 +37,7 @@ COPY = /bin/cp -pRf
 PACK1 = /bin/tar $(PACK1_GNUOPTS) -vcf
 PACK1_EXT = .tar
 
-PACK2 = /usr/bin/gzip -9
+PACK2 = /usr/bin/gzip -9 -f
 PACK2_EXT = .gz
 
 OFFICE_PACK = zip -r -9
@@ -51,7 +51,7 @@ UNOPKG = $(OFFICEDIR)/program/unopkg
 
 EXTENSION_FILES = $(NAME) Addons.xcu description.xml icons META-INF \
 	Office pkg-desc registration COPYING
-DIST_FILES = $(EXTENSION_FILES) AUTHORS ChangeLog INSTALL NEWS README
+DIST_FILES = $(EXTENSION_FILES) AUTHORS ChangeLog INSTALL Makefile NEWS README
 
 SUBST_VERSION = /bin/sed -i "s/@@VERSION@@/$(VER)/g"
 
