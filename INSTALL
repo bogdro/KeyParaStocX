@@ -12,7 +12,10 @@ Requirements: a compatible office suite:
   - Apache OpenOffice (https://www.openoffice.org/)
   - LibreOffice (https://www.libreoffice.org/)
 
-Installation steps:
+Installation steps - simple: if you have the right file associations, simply
+ double-click the .oxt file to install the extension.
+
+Installation steps - manual:
 
 1. Open the "Writer" application (word processor) of the office suite.
 2. Open the Tools menu and choose "Extension Manager".
