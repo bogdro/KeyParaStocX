@@ -23,16 +23,6 @@
 &apos;  along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 &apos;
 
-Dim Doc as object
-Dim replaceDesc as object
-Dim find as object
-Dim i as Integer
-Dim f as object
-Dim Cursor as object
-Dim DocIndices as object
-Dim hasIndex as Boolean
-Dim DocIndex as object
-
 Sub Main
 
 	&apos; first, change the words, then make new paragraphs (in the Articles)
@@ -50,6 +40,12 @@ Sub Main
 End Sub
 
 Sub ChangeWordParaStyle (theWord as string, newStyle as string)
+
+	Dim Doc as object
+	Dim replaceDesc as object
+	Dim find as object
+	Dim i as Integer
+	Dim f as object
 
 	Doc = ThisComponent
 
@@ -73,6 +69,13 @@ Sub ChangeWordParaStyle (theWord as string, newStyle as string)
 End Sub
 
 Sub ChangeArticles
+
+	Dim Doc as object
+	Dim replaceDesc as object
+	Dim find as object
+	Dim i as Integer
+	Dim f as object
+	Dim Cursor as object
 
 	Doc = ThisComponent
 
@@ -128,6 +131,13 @@ Sub ChangeArticles
 End Sub
 
 Sub AddTableOfContents
+
+	Dim Doc as object
+	Dim DocIndices as object
+	Dim hasIndex as Boolean
+	Dim DocIndex as object
+	Dim i as Integer
+	Dim Cursor as object
 
 	Doc = ThisComponent
 	Cursor = Doc.Text.createTextCursor
