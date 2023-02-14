@@ -77,7 +77,7 @@ dist-src: $(NAME)-$(VER)$(PACK1_EXT)$(PACK2_EXT)
 
 $(NAME)-$(VER)$(PACK1_EXT)$(PACK2_EXT): $(shell find $(DIST_FILES) -type f) \
 		Makefile
-	$(RMDIR) $(NAME)-$(VER)
+	$(RMDIR) $(NAME)-$(VER) $(NAME)-$(VER)$(PACK1_EXT)$(PACK2_EXT)
 	$(MKDIR) $(NAME)-$(VER)
 	$(COPY) $(DIST_FILES) $(NAME)-$(VER)
 	find $(NAME)-$(VER) -name .gitignore -exec $(RMDIR) '{}' \;
