@@ -54,6 +54,7 @@ EXTENSION_FILES = $(NAME) Addons.xcu description.xml icons META-INF \
 DIST_FILES = $(EXTENSION_FILES) AUTHORS ChangeLog INSTALL Makefile NEWS README
 
 SUBST_VERSION = /bin/sed -i "s/@@VERSION@@/$(VER)/g"
+SUBST_ID = /bin/sed -i "s/@@IDENTIFIER@@/$(IDENTIFIER)/g"
 
 all:	dist
 
@@ -67,6 +68,7 @@ $(NAME)-$(VER)$(OFFICE_PACK_EXT): $(shell find $(EXTENSION_FILES) -type f) \
 	$(MKDIR) $(NAME)-$(VER)
 	$(COPY) $(EXTENSION_FILES) $(NAME)-$(VER)
 	find $(NAME)-$(VER) -type f -exec $(SUBST_VERSION) '{}' \;
+	find $(NAME)-$(VER) -type f -exec $(SUBST_ID) '{}' \;
 	find $(NAME)-$(VER) -name .gitignore -exec $(RMDIR) '{}' \;
 	cd $(NAME)-$(VER) && $(OFFICE_PACK) ../$(NAME)-$(VER)$(OFFICE_PACK_EXT) .
 	$(RMDIR) $(NAME)-$(VER)
