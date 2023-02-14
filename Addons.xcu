@@ -11,7 +11,7 @@
 					<value>com.sun.star.text.TextDocument</value>
 				</prop>
 				<prop oor:name="URL" oor:type="xs:string">
-					<value>vnd.sun.star.script:KeyParaStocX.Module1.Main?language=Basic&amp;location=application</value>
+					<value>vnd.sun.star.script:KeyParaStocX.Process.Main?language=Basic&amp;location=application</value>
 				</prop>
 				<prop oor:name="Title" oor:type="xs:string">
 					<value>KeyParaStocX</value>
@@ -50,7 +50,7 @@
 								<value xml:lang="en">KeyParaStocX</value>
 							</prop>
 							<prop oor:name="URL" oor:type="xs:string">
-								<value>vnd.sun.star.script:KeyParaStocX.Module1.Main?language=Basic&amp;location=application</value>
+								<value>vnd.sun.star.script:KeyParaStocX.Process.Main?language=Basic&amp;location=application</value>
 							</prop>
 							<prop oor:name="Target" oor:type="xs:string">
 								<value>_self</value>
@@ -64,7 +64,7 @@
 		<node oor:name="Images">
 			<node oor:name="KeyParaStocX.OfficeToolbarMerging.N001" oor:op="replace">
 				<prop oor:name="URL" oor:type="xs:string">
-					<value>vnd.sun.star.script:KeyParaStocX.Module1.Main?language=Basic&amp;location=application</value>
+					<value>vnd.sun.star.script:KeyParaStocX.Process.Main?language=Basic&amp;location=application</value>
 				</prop>
 				<node oor:name="UserDefinedImages">
 					<prop oor:name="ImageSmallURL" oor:type="xs:string">
