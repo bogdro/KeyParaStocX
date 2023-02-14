@@ -1,7 +1,4 @@
 KeyParaStocX @@VERSION@@ (dawniej: Pożeracz ustaw)
 Copyright (c) 2011-2023  Bogdan Drozdowski
 
-KeyParaStocX (Keyword-based Paragraph Styling and Table of Contents eXtension)
-to rozszerzenie LibreOffice/Apache OpenOffice/OpenOffice.org znajdujące
-charakterystyczne elementy ustaw i rozporządzeń starego typu i tworzące dla
-nich spis treści.
+KeyParaStocX (Keyword-based Paragraph Styling and Table of Contents eXtension) to rozszerzenie LibreOffice/Apache OpenOffice/OpenOffice.org znajdujące charakterystyczne elementy ustaw i rozporządzeń starego typu i tworzące dla nich spis treści.
