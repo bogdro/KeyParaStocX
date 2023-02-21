@@ -34,7 +34,6 @@ import unohelper
 
 # https://wiki.documentfoundation.org/Documentation/DevGuide/Extensions#Creating_the_GUI_of_the_Options_Page
 from com.sun.star.awt import XContainerWindowEventHandler
-#from com.sun.star.beans import PropertyState
 from com.sun.star.container import XNameAccess
 
 # https://wiki.openoffice.org/wiki/Documentation/DevGuide/WritingUNO/Core_Interfaces_to_Implement:
@@ -208,8 +207,6 @@ g_ImplementationHelper.addImplementation(KeyParaStocXConfig,
 	'@@IDENTIFIER@@.KeyParaStocXConfig',
 	('@@IDENTIFIER@@.KeyParaStocXConfig',),
 )
-
-#g_exportedScripts = loadData, get_config
 
 # ------------------- Testing:
 # https://wiki.openoffice.org/wiki/UNO_component_packaging
