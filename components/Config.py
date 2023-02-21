@@ -41,8 +41,8 @@ from com.sun.star.container import XNameAccess
 from com.sun.star.lang import XServiceInfo, XServiceName, XTypeProvider
 from com.sun.star.uno import XInterface
 
-# Doesn't work with XTypeProvider - perhaps wrong data/data types. Just stops after getTypes().
-# Fortunately, unohelper.Base provides this.
+# Doesn't work with XTypeProvider - perhaps wrong data/data types.
+# Just stops after getTypes(). Fortunately, unohelper.Base provides this.
 #class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceInfo, XServiceName, XTypeProvider, XInterface):
 class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceInfo, XServiceName, XNameAccess):#, XInterface):
 
@@ -73,6 +73,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DIRECT_VALUE')
 		# config-schema.xcs:
 		self.cfg_property.Value = '/@@IDENTIFIER@@.options.KeyParaStocX/Headers'
+		self.cfg_elems = ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7')
 		self.cfg_access = self.cfg_provider.createInstanceWithArguments(
 			'com.sun.star.configuration.ConfigurationUpdateAccess', (self.cfg_property,))
 
@@ -164,7 +165,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			# save data:
 			if xWindow is None or xWindow.Model.Name is None:
 				return False;	# work only from the GUI
-			for n in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
+			for n in self.cfg_elems:
 				cfg_leaf = self.cfg_access.getByName(n)
 				cfg_leaf.setPropertyValue('key', xWindow.getControl(n + '_key').getText())
 				cfg_leaf.setPropertyValue('style', xWindow.getControl(n + '_style').getText())
@@ -176,7 +177,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			self.loadData()
 			# store into controls, if any
 			if xWindow and xWindow.Model.Name:
-				for n in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
+				for n in self.cfg_elems:
 					if self.configuration[n]['key'] is not None:
 						xWindow.getControl(n + '_key').setText(self.configuration[n]['key'])
 					if self.configuration[n]['style'] is not None:
@@ -188,7 +189,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 	def loadData(self):
 		# set an internal variable, allow access from Basic
 		self.configuration = {}
-		for n in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
+		for n in self.cfg_elems:
 			prop = self.cfg_access.getPropertyValue(n)
 			values = {}
 			values['key'] = prop.getPropertyValue('key')
