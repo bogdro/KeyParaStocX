@@ -1,3 +1,26 @@
+2023-02-21	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+
+	* KeyParaStocX 0.9.0:
+	  Support for user configuration. Small code and license clean-up.
+	  Update in the build system.
+	* KeyParaStocX-dialog: Added support for user configuration.
+	* components/Config.py: A new Python component for user configuration.
+	* Process.xba: Renamed from Module1.xba. Removed the links, added the
+	  license block. Switched to local variables. Changed the completion
+	  message.
+	* Addons.xcu: Added license.
+	* META-INF/manifest.xml: Added namespace, cleaned-up a bit. Added
+	  configuration files. Added license.
+	* Makefile: Substitute also the ID. Remove any existing archive when
+	  re-packaging. Updated the description. Make a variable for 'sed'.
+	  Added packaging the user option support files.
+	* description.xml: The ID is now set from the Makefile. Indentation
+	  corrected. Added license.
+	* pkg-desc/pkg-description*: Updated the descriptions.
+	* INSTALL: Added simple installation instructions. Updated the
+	  description.
+	* README: Updated the description.
+
 2023-02-12	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
 	* KeyParaStocX 0.7.0:
@@ -27,7 +50,7 @@
 
 	* KeyParaStocX 0.4.0:
 	  Renamed the extension and translated to English. Other small changes.
-	* Module1.xba: updated the links.
+	* Module1.xba: Updated the links.
 
 2011-06-11	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
