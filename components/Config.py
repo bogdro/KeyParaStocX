@@ -139,7 +139,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		group = parts[0]
 		key = parts[1]
 		if group in self.configuration:
-			return key in self.configuration[n]
+			return key in self.configuration[group]
 		return False
 
 	# ------------------- XInterface:
