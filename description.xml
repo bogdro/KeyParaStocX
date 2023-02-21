@@ -29,7 +29,7 @@
 
 	<identifier value="@@IDENTIFIER@@" />
 	<icon>
-		<default xlink:href="icons/KeyParaStocX-icon.svg" />
+		<default xlink:href="icons/KeyParaStocX-main-icon.svg" />
 	</icon>
 	<version value="@@VERSION@@"/>
 	<registration>

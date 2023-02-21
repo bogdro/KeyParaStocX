@@ -7,7 +7,7 @@
    viewBox="0 0 128.0 128.0"
    version="1.1"
    id="SVGRoot"
-   sodipodi:docname="KeyParaStocX-icon.svg"
+   sodipodi:docname="KeyParaStocX-main-icon.svg"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -29,7 +29,7 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="1.8173401"
-     inkscape:cx="-44.845761"
+     inkscape:cx="25.036591"
      inkscape:cy="56.676238"
      inkscape:window-width="1366"
      inkscape:window-height="701"
@@ -53,6 +53,13 @@
      inkscape:label="Warstwa 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.377952;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="rect1064"
+       width="129.59741"
+       height="130.92944"
+       x="-1.5160888"
+       y="-1.2848064" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96px;line-height:1.25;font-family:'Bitstream Vera Sans';-inkscape-font-specification:'Bitstream Vera Sans'"
