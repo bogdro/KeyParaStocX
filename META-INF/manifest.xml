@@ -1,4 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ KeyParaStocX - the extension manifest
+
+ Copyright (C) 2023 Bogdan 'bogdro' Drozdowski, bogdro (at) users . sourceforge . net
+
+ This file is part of KeyParaStocX (Keyword-based Paragraph Styling and
+  Table of Contents eXtension), an OpenOffice / LibreOffice extension that
+  searches for the configured keywords in a text, changes their style and
+  builds a Table of Contents for them.
+
+ This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 3
+  of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <manifest:manifest xmlns:manifest="http://openoffice.org/2001/manifest">
  <manifest:file-entry manifest:full-path="KeyParaStocX/" manifest:media-type="application/vnd.sun.star.basic-library"/>
  <manifest:file-entry manifest:full-path="Addons.xcu" manifest:media-type="application/vnd.sun.star.configuration-data"/>
@@ -8,4 +31,25 @@
 	manifest:media-type="application/vnd.sun.star.package-bundle-description"/>
  <manifest:file-entry manifest:full-path="pkg-desc/pkg-description-pl.txt"
 	manifest:media-type="application/vnd.sun.star.package-bundle-description;locale=pl"/>
+
+ <!-- configuration management: -->
+ <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-schema"
+	manifest:full-path="KeyParaStocX-dialog/config-schema.xcs" />
+ <manifest:file-entry manifest:media-type="application/vnd.sun.star.configuration-data"
+	manifest:full-path="KeyParaStocX-dialog/config-data.xcu" />
+ <manifest:file-entry manifest:media-type="application/vnd.sun.star.dialog-library"
+	manifest:full-path="KeyParaStocX-dialog/" />
+ <!--
+	https://www.openoffice.org/udk/python/scriptingframework/
+	https://blog.mdda.net/oss/2011/10/07/python-libreoffice
+ -->
+ <manifest:file-entry manifest:media-type="application/vnd.sun.star.uno-component;type=Python" manifest:full-path="components/Config.py" />
+ <manifest:file-entry manifest:media-type="application/binary" manifest:full-path="components/" />
+ <manifest:file-entry manifest:media-type="application/vnd.sun.star.framework-script" manifest:full-path="components" />
+
+ <!-- do not use the same directory for macros and dialogs at the same time
+    - it makes it impossible to edit macro code in the Basic IDE
+ <manifest:file-entry manifest:media-type="application/vnd.sun.star.dialog-library"
+	manifest:full-path="KeyParaStocX/" />
+ -->
 </manifest:manifest>
