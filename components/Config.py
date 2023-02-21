@@ -26,8 +26,6 @@
 # Due to https://www.openoffice.org/udk/basic/ saying that components
 # cannot be written in Basic, this is in Python.
 
-import os
-import sys
 import uuid
 
 # https://wiki.openoffice.org/wiki/Python/Transfer_from_Basic_to_Python
@@ -79,22 +77,13 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		self.cfg_property.Value = '/@@IDENTIFIER@@.options.KeyParaStocX/Headers'
 		self.cfg_access = self.cfg_provider.createInstanceWithArguments(
 			'com.sun.star.configuration.ConfigurationUpdateAccess', (self.cfg_property,))
-		os.system ("echo 'constructor done' >> /home/bogdan/tmp/KeyParaStocX.log")
 
 	# ------------------- XContainerWindowEventHandler:
 	def callHandlerMethod(self, xWindow, eventObject, methodName):
-		os.system ("echo callHandlerMethod1: '" + methodName + "' >> /home/bogdan/tmp/KeyParaStocX.log")
-		os.system ("echo callHandlerMethod11: '" + self.event_method_name + "' >> /home/bogdan/tmp/KeyParaStocX.log")
-		os.system ("echo callHandlerMethod2: '" + str(methodName == self.event_method_name) + "' >> /home/bogdan/tmp/KeyParaStocX.log")
 		if methodName == self.event_method_name:
 			try:
-				os.system ("echo callHandlerMethod3: '" + methodName + "' >> /home/bogdan/tmp/KeyParaStocX.log")
 				return self.handleExternalEvent(xWindow, eventObject);
 			except Exception as ex:
-				os.system ("echo callHandlerMethod4: '" + str(sys.exc_info()[0]) + ': ' + str(sys.exc_info()[1]) + "' >> /home/bogdan/tmp/KeyParaStocX.log")
-				os.system ("echo callHandlerMethod4: '" + str(type(ex)) + "' >> /home/bogdan/tmp/KeyParaStocX.log")
-				os.system ("echo callHandlerMethod4: '" + str(ex.args) + "' >> /home/bogdan/tmp/KeyParaStocX.log")
-				os.system ("echo callHandlerMethod4: '" + str(ex) + "' >> /home/bogdan/tmp/KeyParaStocX.log")
 				pass
 		if methodName == 'loadData':
 			self.loadData()
@@ -205,16 +194,10 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 
 	# -------------------
 	def handleExternalEvent (self, xWindow, eventObject):
-		os.system ("echo handleExternalEvent: 1 >> /home/bogdan/tmp/KeyParaStocX.log")
 		methodName = str(eventObject).lower()
-		os.system ("echo handleExternalEvent: '" + methodName + "' >> /home/bogdan/tmp/KeyParaStocX.log")
 		if methodName == 'ok':
 			# save data:
-			#if xWindow is None:
-				#os.system ("echo 'no window' >> /home/bogdan/tmp/KeyParaStocX.log")
-				#return False;	# work only from the GUI
 			if xWindow is None or xWindow.Model.Name is None:
-				os.system ("echo 'no window name' >> /home/bogdan/tmp/KeyParaStocX.log")
 				return False;	# work only from the GUI
 			for n in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
 				cfg_leaf = self.cfg_access.getByName(n)
@@ -225,12 +208,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 				self.cfg_access.commitChanges();
 		elif methodName == 'back' or methodName == 'initialize':
 			# load data
-			os.system ("echo handleExternalEvent: loading >> /home/bogdan/tmp/KeyParaStocX.log")
 			self.loadData()
-			os.system ("echo handleExternalEvent: loaded >> /home/bogdan/tmp/KeyParaStocX.log")
-			os.system ("echo handleExternalEvent: loaded: '" + str(self.configuration) + "' >> /home/bogdan/tmp/KeyParaStocX.log")
-			if xWindow is None or xWindow.Model.Name is None:
-				os.system ("echo load: no window name >> /home/bogdan/tmp/KeyParaStocX.log")
 			# store into controls, if any
 			if xWindow and xWindow.Model.Name:
 				for n in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
@@ -246,9 +224,6 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		# set an internal variable, allow access from Basic
 		self.configuration = {}
 		for n in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
-			#os.system ("echo prop_" + n + "': '" + str(cfg_reader.getPropertyValue(n)) + "' >> /home/bogdan/tmp/KeyParaStocX.log")
-			#os.system ("echo loading '" + n + "' >> /home/bogdan/tmp/KeyParaStocX.log")
-			#os.system ("echo prop_" + n + ": '" + str(cfg_reader.getPropertyValue(n).getPropertyValue('style')) + "' >> /home/bogdan/tmp/KeyParaStocX.log")
 			prop = self.cfg_access.getPropertyValue(n)
 			values = {}
 			values['key'] = prop.getPropertyValue('key')
