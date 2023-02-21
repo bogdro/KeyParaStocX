@@ -35,7 +35,6 @@ import unohelper
 # https://wiki.documentfoundation.org/Documentation/DevGuide/Extensions#Creating_the_GUI_of_the_Options_Page
 from com.sun.star.awt import XContainerWindowEventHandler
 #from com.sun.star.beans import PropertyState
-#from com.sun.star.script import XInvocation
 from com.sun.star.container import XNameAccess
 
 # https://wiki.openoffice.org/wiki/Documentation/DevGuide/WritingUNO/Core_Interfaces_to_Implement:
@@ -54,7 +53,6 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			XServiceInfo,
 			XServiceName,
 			#XTypeProvider,
-			#XInvocation,
 			XNameAccess,
 			XInterface,
 			]
@@ -85,14 +83,10 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 				return self.handleExternalEvent(xWindow, eventObject);
 			except Exception as ex:
 				pass
-		if methodName == 'loadData':
-			self.loadData()
-		#if methodName == 'get_config':
-			#self.get_config()
 		return False
 
 	def getSupportedMethodNames(self):
-		return (self.event_method_name, 'loadData')#, 'get_config')
+		return (self.event_method_name, )
 
 	# ------------------- XServiceInfo:
 	def getImplementationName(self):
@@ -109,8 +103,8 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		return self.name
 
 	# ------------------- XTypeProvider:
-	# Doesn't work with XTypeProvider - perhaps wrong data/data types. Just stops after getTypes()
-	# Fortunately, unohelper.Base provides this.
+	# Doesn't work with XTypeProvider - perhaps wrong data/data types.
+	# Just stops after getTypes(). Fortunately, unohelper.Base provides this.
 	#def getTypes(self):
 		#ret = []
 		#for t in super().getTypes():
@@ -121,35 +115,6 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 
 	#def getImplementationId(self):
 		#return self.uniqid
-
-	# ------------------- XInvocation:
-	#def getIntrospection (self):
-		#return None
-
-	#def invoke (self, aFunctionName, aParams, aOutParamIndex, aOutParam):
-		#if aFunctionName == 'loadData':
-			#self.loadData()
-			##aOutParamIndex = ()
-			##aOutParam = ()
-			#return None
-		#elif aFunctionName == 'get_config':
-			#ret = self.get_config(aParams[0], aParams[1])
-			##aOutParamIndex = ()
-			##aOutParam = ()
-			#return ret
-		#return None
-
-	#def setValue (self, aPropertyName, aValue):
-		#pass
-
-	#def getValue (self, aPropertyName):
-		#return None
-
-	#def hasMethod (self, aName):
-		#return aName == 'loadData' or aName == 'get_config'
-
-	#def hasProperty (self, aName):
-		#return False
 
 	# ------------------- XNameAccess:
 	def getByName (self, aName):
