@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="Options" dlg:left="143" dlg:top="44" dlg:width="224" dlg:height="137" dlg:closeable="true" dlg:moveable="true" dlg:withtitlebar="false">
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="toc_level_label" dlg:tab-index="0" dlg:disabled="true" dlg:left="3" dlg:top="1" dlg:width="53" dlg:height="17" dlg:value="Level in the&#x0a;Table of Contents" dlg:align="center"/>
+  <dlg:text dlg:id="keyword_label" dlg:tab-index="1" dlg:left="68" dlg:top="6" dlg:width="34" dlg:height="8" dlg:value="Keyword"/>
+  <dlg:text dlg:id="style_label" dlg:tab-index="2" dlg:left="113" dlg:top="6" dlg:width="28" dlg:height="8" dlg:value="Style"/>
+  <dlg:text dlg:id="l1_label" dlg:tab-index="3" dlg:left="7" dlg:top="22" dlg:width="43" dlg:height="8" dlg:value="1" dlg:align="right"/>
+  <dlg:textfield dlg:id="head1_key" dlg:tab-index="4" dlg:left="60" dlg:top="20" dlg:width="39" dlg:height="10" dlg:value="Część"/>
+  <dlg:textfield dlg:id="head1_style" dlg:tab-index="5" dlg:left="102" dlg:top="20" dlg:width="49" dlg:height="10" dlg:value="Nagłówek 1"/>
+  <dlg:text dlg:id="l2_label" dlg:tab-index="6" dlg:left="7" dlg:top="38" dlg:width="43" dlg:height="8" dlg:value="2" dlg:align="right"/>
+  <dlg:textfield dlg:id="head2_key" dlg:tab-index="7" dlg:left="60" dlg:top="36" dlg:width="39" dlg:height="10" dlg:value="Księga"/>
+  <dlg:textfield dlg:id="head2_style" dlg:tab-index="8" dlg:left="102" dlg:top="36" dlg:width="49" dlg:height="10" dlg:value="Nagłówek 2"/>
+  <dlg:text dlg:id="l3_label" dlg:tab-index="9" dlg:left="7" dlg:top="54" dlg:width="43" dlg:height="8" dlg:value="3" dlg:align="right"/>
+  <dlg:textfield dlg:id="head3_key" dlg:tab-index="10" dlg:left="60" dlg:top="52" dlg:width="39" dlg:height="10" dlg:value="Tytuł"/>
+  <dlg:textfield dlg:id="head3_style" dlg:tab-index="11" dlg:left="102" dlg:top="52" dlg:width="49" dlg:height="10" dlg:value="Nagłówek 3"/>
+  <dlg:text dlg:id="l4_label" dlg:tab-index="12" dlg:left="7" dlg:top="70" dlg:width="43" dlg:height="8" dlg:value="4" dlg:align="right"/>
+  <dlg:textfield dlg:id="head4_key" dlg:tab-index="13" dlg:left="60" dlg:top="68" dlg:width="39" dlg:height="10" dlg:value="Dział"/>
+  <dlg:textfield dlg:id="head4_style" dlg:tab-index="14" dlg:left="102" dlg:top="68" dlg:width="49" dlg:height="10" dlg:value="Nagłówek 4"/>
+  <dlg:text dlg:id="l5_label" dlg:tab-index="15" dlg:left="7" dlg:top="86" dlg:width="43" dlg:height="8" dlg:value="5" dlg:align="right"/>
+  <dlg:textfield dlg:id="head5_key" dlg:tab-index="16" dlg:left="60" dlg:top="84" dlg:width="39" dlg:height="10" dlg:value="Rozdział"/>
+  <dlg:textfield dlg:id="head5_style" dlg:tab-index="17" dlg:left="102" dlg:top="84" dlg:width="49" dlg:height="10" dlg:value="Nagłówek 5"/>
+  <dlg:text dlg:id="l6_label" dlg:tab-index="18" dlg:left="7" dlg:top="102" dlg:width="43" dlg:height="8" dlg:value="6" dlg:align="right"/>
+  <dlg:textfield dlg:id="head6_key" dlg:tab-index="19" dlg:left="60" dlg:top="100" dlg:width="39" dlg:height="10" dlg:value="Oddział"/>
+  <dlg:textfield dlg:id="head6_style" dlg:tab-index="20" dlg:left="102" dlg:top="100" dlg:width="49" dlg:height="10" dlg:value="Nagłówek 6"/>
+  <dlg:text dlg:id="l7_label" dlg:tab-index="21" dlg:left="7" dlg:top="118" dlg:width="43" dlg:height="8" dlg:value="7" dlg:align="right"/>
+  <dlg:textfield dlg:id="head7_key" dlg:tab-index="22" dlg:left="60" dlg:top="116" dlg:width="39" dlg:height="10" dlg:value="Art\."/>
+  <dlg:textfield dlg:id="head7_style" dlg:tab-index="23" dlg:left="102" dlg:top="116" dlg:width="49" dlg:height="10" dlg:value="Nagłówek 7"/>
+  <dlg:text dlg:id="key_label_alt" dlg:tab-index="24" dlg:left="160" dlg:top="6" dlg:width="62" dlg:height="8" dlg:value="Keyword (alternative)"/>
+  <dlg:textfield dlg:id="head7_key_alt" dlg:tab-index="25" dlg:left="157" dlg:top="116" dlg:width="49" dlg:height="10" dlg:value="§"/>
+ </dlg:bulletinboard>
+</dlg:window>

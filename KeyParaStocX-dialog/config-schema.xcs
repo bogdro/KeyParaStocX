@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ KeyParaStocX - configuration data schema
+
+ Copyright (C) 2023 Bogdan 'bogdro' Drozdowski, bogdro (at) users . sourceforge . net
+
+ This file is part of KeyParaStocX (Keyword-based Paragraph Styling and
+  Table of Contents eXtension), an OpenOffice / LibreOffice extension that
+  searches for the configured keywords in a text, changes their style and
+  builds a Table of Contents for them.
+
+ This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 3
+  of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<oor:component-schema
+	xmlns:oor="http://openoffice.org/2001/registry"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	oor:name="KeyParaStocX"
+	oor:package="@@IDENTIFIER@@.options"
+	xml:lang="en-US">
+
+	<info>
+		<author>Bogdan Drozdowski</author>
+		<desc>Configuration schema for KeyParaStocX</desc>
+	</info>
+	<templates>
+		<group oor:name="Header">
+			<info>
+				<desc>The KeyParaStocX configuration - header parameters.</desc>
+			</info>
+			<prop oor:name="key" oor:type="xs:string">
+				<info>
+					<desc>Keyword (regular expression)</desc>
+				</info>
+			</prop>
+			<prop oor:name="style" oor:type="xs:string">
+				<info>
+					<desc>Style</desc>
+				</info>
+			</prop>
+			<prop oor:name="key_alt" oor:type="xs:string">
+				<info>
+					<desc>Alternative keyword/expression</desc>
+				</info>
+			</prop>
+		</group>
+		<!-- error "missing >type<" when "oor:node-type" given, error "invalid type Header" when "oor:type" given -->
+		<!--
+		<group oor:name="Headers">
+			<prop oor:name="head1" oor:node-type="Header" />
+			<prop oor:name="head2" oor:node-type="Header" />
+			<prop oor:name="head3" oor:node-type="Header" />
+			<prop oor:name="head4" oor:node-type="Header" />
+			<prop oor:name="head5" oor:node-type="Header" />
+			<prop oor:name="head6" oor:node-type="Header" />
+			<prop oor:name="head7" oor:node-type="Header" />
+		</group>
+		-->
+	</templates>
+	<component>
+		<!--<set oor:name="Headers" oor:node-type="Headers"/>-->
+		<group oor:name="Headers">
+			<info>
+				<desc>Header style configuration</desc>
+			</info>
+			<node-ref oor:name="head1" oor:node-type="Header">
+				<info>
+					<desc>Header 1</desc>
+				</info>
+			</node-ref>
+			<node-ref oor:name="head2" oor:node-type="Header">
+				<info>
+					<desc>Header 2</desc>
+				</info>
+			</node-ref>
+			<node-ref oor:name="head3" oor:node-type="Header">
+				<info>
+					<desc>Header 3</desc>
+				</info>
+			</node-ref>
+			<node-ref oor:name="head4" oor:node-type="Header">
+				<info>
+					<desc>Header 4</desc>
+				</info>
+			</node-ref>
+			<node-ref oor:name="head5" oor:node-type="Header">
+				<info>
+					<desc>Header 5</desc>
+				</info>
+			</node-ref>
+			<node-ref oor:name="head6" oor:node-type="Header">
+				<info>
+					<desc>Header 6</desc>
+				</info>
+			</node-ref>
+			<node-ref oor:name="head7" oor:node-type="Header">
+				<info>
+					<desc>Header 7</desc>
+				</info>
+			</node-ref>
+		</group>
+	</component>
+</oor:component-schema>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
-<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Process" script:language="StarBasic" script:moduleType="normal">Option Explicit
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="Process" script:language="StarBasic" script:moduleType="normal">REM  *****  BASIC  *****
+Option Explicit
 
 &apos; KeyParaStocX - main module
 &apos;
@@ -25,17 +26,30 @@
 
 Sub Main
 
+	Dim svc as object
+	Dim a as string
+	
+	svc = CreateUnoService(&quot;vnd.bogdandrozdowski.keyparastocx.KeyParaStocXConfig&quot;)
+	&apos;svc.invoke(&quot;loadData&quot;, Array(), Array(), Array())
+	&apos;a = svc.invoke(&quot;get_config&quot;, Array(&quot;head1&quot;, &quot;key&quot;), Array(), Array())
+	&apos;a = svc.loadData()
+	&apos;a = svc.callFunction(&quot;loadData&quot;, Array())
+	&apos;a = svc.callHandlerMethod(&quot;loadData&quot;, Array())
+	&apos;a = svc.callFunction(&quot;get_config&quot;, Array(&quot;head1&quot;, &quot;key&quot;))
+	&apos;svc = CreateUnoService(&quot;vnd.bogdandrozdowski.keyparastocx.KeyParaStocXConfig&quot;)
+	&apos;svc.callFunction(&quot;loadData&quot;)
+	&apos;a = svc.callFunction(&quot;get_config&quot;, Array(&quot;head1&quot;, &quot;key&quot;))
 	&apos; first, change the words, then make new paragraphs (in the Articles)
-	ChangeWordParaStyle (&quot;Część&quot;   , &quot;Nagłówek 1&quot;)
-	ChangeWordParaStyle (&quot;Księga&quot;  , &quot;Nagłówek 2&quot;)
-	ChangeWordParaStyle (&quot;Tytuł&quot;   , &quot;Nagłówek 3&quot;)
-	ChangeWordParaStyle (&quot;Dział&quot;   , &quot;Nagłówek 4&quot;)
-	ChangeWordParaStyle (&quot;Rozdział&quot;, &quot;Nagłówek 5&quot;)
-	ChangeWordParaStyle (&quot;Oddział&quot; , &quot;Nagłówek 6&quot;)
-	ChangeArticles
+	ChangeWordParaStyle (svc.getByName(&quot;head1/key&quot;), svc.getByName(&quot;head1/style&quot;))
+	ChangeWordParaStyle (svc.getByName(&quot;head2/key&quot;), svc.getByName(&quot;head2/style&quot;))
+	ChangeWordParaStyle (svc.getByName(&quot;head3/key&quot;), svc.getByName(&quot;head3/style&quot;))
+	ChangeWordParaStyle (svc.getByName(&quot;head4/key&quot;), svc.getByName(&quot;head4/style&quot;))
+	ChangeWordParaStyle (svc.getByName(&quot;head5/key&quot;), svc.getByName(&quot;head5/style&quot;))
+	ChangeWordParaStyle (svc.getByName(&quot;head6/key&quot;), svc.getByName(&quot;head6/style&quot;))
+	ChangeLastLevel (svc.getByName(&quot;head7/key&quot;), svc.getByName(&quot;head7/key_alt&quot;), svc.getByName(&quot;head7/style&quot;))
 	AddTableOfContents
 
-	msgbox &quot;Done :)&quot;
+	msgbox &quot;Done!&quot;
 
 End Sub
 
@@ -68,7 +82,7 @@ Sub ChangeWordParaStyle (theWord as string, newStyle as string)
 
 End Sub
 
-Sub ChangeArticles
+Sub ChangeLastLevel (key as string, alt_key as string, newStyle as string)
 
 	Dim Doc as object
 	Dim replaceDesc as object
@@ -83,7 +97,7 @@ Sub ChangeArticles
 	replaceDesc.searchRegularExpression = True
 	replaceDesc.searchCaseSensitive = True
 	replaceDesc.SearchAll = True
-	replaceDesc.searchString = &quot;^[ \t\s	]*Art\.[ \t\s	]+[0-9]+[a-zA-Z]*\.?[ \t\s	]+(\[([^\]])+\])&quot;
+	replaceDesc.searchString = &quot;^[ \t\s	]*&quot; &amp; key &amp; &quot;[ \t\s	]+[0-9]+[a-zA-Z]*\.?[ \t\s	]+(\[([^\]])+\])&quot;
 
 	&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
 	find = doc.FindAll (replaceDesc)
@@ -91,24 +105,24 @@ Sub ChangeArticles
 	For i = 0 to find.Count - 1
 
 		f = find.getByIndex (i)
-		&apos; If a Paragraph is in a table, it generates problems,
+		&apos; If the word is in a table, it generates problems,
 		&apos; but we don&apos;t need to process it anyway, so we skip.
 		If IsEmpty (f.Cell) Then
 			Cursor.gotoRange (f.end, False)
 			Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
-			f.ParaStyleName = &quot;Nagłówek 7&quot;
+			f.ParaStyleName = newStyle
 		End If
 
 	Next
 
 	If find.Count = 0 Then
 
-		&apos; no Articles found - change the Paragraphs instead
+		&apos; primary key not found - change the secondary instead
 		replaceDesc = Doc.createReplaceDescriptor
 		replaceDesc.searchRegularExpression = True
 		replaceDesc.searchCaseSensitive = True
 		replaceDesc.SearchAll = True
-		replaceDesc.searchString = &quot;^[ \t\s	]*§[ \t\s	]*[0-9]+[a-zA-Z]*\.?([ \t\s	]+(\[([^\]])+\]))?&quot;
+		replaceDesc.searchString = &quot;^[ \t\s	]*&quot; &amp; alt_key &amp; &quot;[ \t\s	]*[0-9]+[a-zA-Z]*\.?([ \t\s	]+(\[([^\]])+\]))?&quot;
 
 		&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
 		find = doc.FindAll (replaceDesc)
@@ -116,12 +130,12 @@ Sub ChangeArticles
 		For i = 0 to find.Count - 1
 
 			f = find.getByIndex (i)
-			&apos; If a Paragraph is in a table, it generates problems,
+			&apos; If the word is in a table, it generates problems,
 			&apos; but we don&apos;t need to process it anyway, so we skip.
 			If IsEmpty (f.Cell) Then
 				Cursor.gotoRange (f.end, False)
 				Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
-				f.ParaStyleName = &quot;Nagłówek 7&quot;
+				f.ParaStyleName = newStyle
 			End If
 
 		Next
