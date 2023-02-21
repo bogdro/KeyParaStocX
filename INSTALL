@@ -2,8 +2,8 @@ This is the INSTALL file for KeyParaStocX.
 
 KeyParaStocX (Keyword-based Paragraph Styling and Table of Contents eXtension)
 is a LibreOffice/Apache OpenOffice/OpenOffice.org extension that searches for
-typical parts of old-style Polish legal acts and builds a Table of Contents
-for them.
+the configured keywords in a text, changes their style and builds a Table of
+Contents for them.
 The extension was formerly called "Pożeracz ustaw" or "PozeraczUstaw".
 
 Requirements: a compatible office suite:
@@ -12,8 +12,11 @@ Requirements: a compatible office suite:
   - Apache OpenOffice (https://www.openoffice.org/)
   - LibreOffice (https://www.libreoffice.org/)
 
-Installation steps - simple: if you have the right file associations, simply
- double-click the .oxt file to install the extension.
+Installation steps - simple:
+
+1. If you have the right file associations, simply double-click the .oxt
+   file to install the extension.
+2. Restart the application if prompted.
 
 Installation steps - manual:
 
