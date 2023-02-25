@@ -54,6 +54,7 @@ EXTENSION_FILES = $(NAME) Addons.xcu components description.xml icons \
 	KeyParaStocX-dialog META-INF Office pkg-desc registration COPYING
 DIST_FILES = $(EXTENSION_FILES) AUTHORS ChangeLog INSTALL Makefile NEWS README
 
+TMP_CFG_FILE = KeyParaStocX-dialog/config-data-tmp.xcu
 SUBST_VERSION = $(SED) "s/@@VERSION@@/$(VER)/g"
 SUBST_ID = $(SED) "s/@@IDENTIFIER@@/$(IDENTIFIER)/g"
 
@@ -68,9 +69,13 @@ $(NAME)-$(VER)$(OFFICE_PACK_EXT): $(shell find $(EXTENSION_FILES) -type f) \
 	$(RMDIR) $(NAME)-$(VER) $(NAME)-$(VER)$(OFFICE_PACK_EXT)
 	$(MKDIR) $(NAME)-$(VER)
 	$(COPY) $(EXTENSION_FILES) $(NAME)-$(VER)
+	find $(NAME)-$(VER) -name .gitignore -exec $(RMDIR) '{}' \;
 	find $(NAME)-$(VER) -type f -exec $(SUBST_VERSION) '{}' \;
 	find $(NAME)-$(VER) -type f -exec $(SUBST_ID) '{}' \;
-	find $(NAME)-$(VER) -name .gitignore -exec $(RMDIR) '{}' \;
+	$(COPY) KeyParaStocX-dialog/config-data.xcu $(TMP_CFG_FILE)
+	$(SED) 's/$$/\\/' $(TMP_CFG_FILE)
+	$(RMDIR) $(TMP_CFG_FILE)
+	$(SED) '/p.Parse(/ r $(TMP_CFG_FILE)' $(NAME)-$(VER)/components/Config.py
 	cd $(NAME)-$(VER) && $(OFFICE_PACK) ../$(NAME)-$(VER)$(OFFICE_PACK_EXT) .
 	$(RMDIR) $(NAME)-$(VER)
 

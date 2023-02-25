@@ -26,7 +26,12 @@
 # Due to https://www.openoffice.org/udk/basic/ saying that components
 # cannot be written in Basic, this is in Python.
 
+import locale
+import os
+import os.path
+import sys
 import uuid
+import xml.parsers.expat
 
 # https://wiki.openoffice.org/wiki/Python/Transfer_from_Basic_to_Python
 import uno
@@ -40,6 +45,56 @@ from com.sun.star.container import XNameAccess
 from com.sun.star.lang import XServiceInfo, XServiceName, XTypeProvider
 from com.sun.star.uno import XInterface
 
+# ------------------- Reading the default configuration:
+# Tried:
+# - prop.getPropertyDefault() from XPropertyWithState,
+# - cfg_access.getByHierarchicalName(),
+# - prop.queryInterface(XPropertyState),
+# - uno.Enum('com.sun.star.beans.PropertyState', 'DEFAULT_VALUE').
+# Nothing works. So, parse the default configuration file instead.
+def_cfg_got_headers = False
+def_cfg_read_data = False
+default_configuration = {}
+def_cfg_last_header = ''
+def_cfg_last_prop = ''
+def_cfg_last_lang = ''
+
+# the parameter list is fixed, so maybe not use a class method
+def def_cfg_start_element(name, attrs):
+	global def_cfg_got_headers, default_configuration, def_cfg_last_header,\
+		def_cfg_last_prop, def_cfg_last_lang, def_cfg_read_data
+
+	if name == 'node' and 'oor:name' in attrs and attrs['oor:name'] == 'Headers':
+		def_cfg_got_headers = True
+		return
+
+	if def_cfg_got_headers and name == 'node' and 'oor:name' in attrs \
+		and attrs['oor:name'] in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
+
+		def_cfg_last_header = attrs['oor:name']
+		default_configuration[def_cfg_last_header] = {}
+
+	if def_cfg_got_headers and name == 'prop' and 'oor:name' in attrs \
+		and attrs['oor:name'] in ('key', 'style', 'key_alt'):
+
+		def_cfg_last_prop = attrs['oor:name']
+		default_configuration[def_cfg_last_header][def_cfg_last_prop] = {}
+
+	if def_cfg_got_headers and name == 'value':
+		def_cfg_last_lang = attrs['xml:lang']
+		def_cfg_read_data = True
+
+def def_cfg_char_data(data):
+	global def_cfg_got_headers, default_configuration, def_cfg_last_header,\
+		def_cfg_last_prop, def_cfg_last_lang, def_cfg_read_data
+
+	if not def_cfg_got_headers or not def_cfg_read_data:
+		return
+
+	default_configuration[def_cfg_last_header][def_cfg_last_prop][def_cfg_last_lang] = data.strip()
+	def_cfg_read_data = False
+
+# ------------------- The component class definition:
 # Doesn't work with XTypeProvider - perhaps wrong data/data types.
 # Just stops after getTypes(). Fortunately, unohelper.Base provides this.
 #class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceInfo, XServiceName, XTypeProvider, XInterface):
@@ -63,18 +118,25 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			]
 		self.event_method_name = 'external_event'
 		self.configuration = {}
+		self.def_cfg = {}
 		self.cfg_provider = ctx.ServiceManager.createInstanceWithContext(
 			'com.sun.star.configuration.ConfigurationProvider', ctx)
 		self.cfg_property = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
 		self.cfg_property.Name = 'nodepath'
 		self.cfg_property.Handle = 0
-		#self.cfg_property.State = uno.getConstantByName('com.sun.star.beans.PropertyState.DIRECT_VALUE')
-		self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DIRECT_VALUE')
+		##self.cfg_property.State = uno.getConstantByName('com.sun.star.beans.PropertyState.DIRECT_VALUE')
+		# Using 'DIRECT_VALUE' can disturb reading default values
+		#self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DIRECT_VALUE')
+		#self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DEFAULT_VALUE')
 		# config-schema.xcs:
 		self.cfg_property.Value = '/@@IDENTIFIER@@.options.KeyParaStocX/Headers'
 		self.cfg_elems = ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7')
 		self.cfg_access = self.cfg_provider.createInstanceWithArguments(
 			'com.sun.star.configuration.ConfigurationUpdateAccess', (self.cfg_property,))
+
+		# initial load to allow working on default settings without
+		# forcing the user to manually save the options:
+		self.loadDefaultData()
 
 	# ------------------- XContainerWindowEventHandler:
 	def callHandlerMethod(self, xWindow, eventObject, methodName):
@@ -122,7 +184,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		parts = aName.split('/')
 		group = parts[0]
 		key = parts[1]
-		return self.get_config(group, key)
+		return self.configuration[group][key]
 
 	def getElementNames (self):
 		self.loadData()
@@ -145,6 +207,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 	#def queryInterface(self, aType):
 		#if (
 			   #aType == XInterface
+			#or aType == XNameAccess
 			#or aType == XTypeProvider
 			#or aType == XServiceName
 			#or aType == XServiceInfo
@@ -164,13 +227,15 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			# save data:
 			if xWindow is None or xWindow.Model.Name is None:
 				return False;	# work only from the GUI
+			self.configuration = {}
 			for n in self.cfg_elems:
-				cfg_leaf = self.cfg_access.getByName(n)
-				cfg_leaf.setPropertyValue('key', xWindow.getControl(n + '_key').getText())
-				cfg_leaf.setPropertyValue('style', xWindow.getControl(n + '_style').getText())
+				values = {}
+				values['key'] = xWindow.getControl(n + '_key').getText()
+				values['style'] = xWindow.getControl(n + '_style').getText()
 				if xWindow.getControl(n + '_key_alt'):
-					cfg_leaf.setPropertyValue('key_alt', xWindow.getControl(n + '_key_alt').getText())
-				self.cfg_access.commitChanges();
+					values['key_alt'] = xWindow.getControl(n + '_key_alt').getText()
+				self.configuration[n] = values
+			self.saveData()
 		elif methodName == 'back' or methodName == 'initialize':
 			# load data
 			self.loadData()
@@ -185,19 +250,98 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 						xWindow.getControl(n + '_key_alt').setText(self.configuration[n]['key_alt'])
 		return True
 
+	def getValueOrDefault(self, name, key):
+		# Get the configured or default data (see comment at the top):
+		prop = self.cfg_access.getPropertyValue(name)
+		value = prop.getPropertyValue(key)
+		if value is None and hasattr(prop, 'getPropertyDefault'):
+			value = prop.getPropertyDefault(key)
+		if value is None:
+			value = self.def_cfg[name][key]\
+				[locale.getdefaultlocale()[0].replace('_', '-')]
+		if value is None:
+			value = self.def_cfg[name][key]['en-US']
+		return value
+
 	def loadData(self):
 		# set an internal variable, allow access from Basic
 		self.configuration = {}
+		#cfg_property2 = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
+		#cfg_property2.Name = 'nodepath'
+		##self.cfg_property.Handle = 0
+		###self.cfg_property.State = uno.getConstantByName('com.sun.star.beans.PropertyState.DIRECT_VALUE')
+		##self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DIRECT_VALUE')
+		##cfg_property2.State = uno.Enum('com.sun.star.beans.PropertyState', 'AMBIGUOUS_VALUE')
+		#cfg_property2.State = uno.Enum('com.sun.star.beans.PropertyState', 'DEFAULT_VALUE')
+		#cfg_property2.Value = '/@@IDENTIFIER@@.options.KeyParaStocX/Headers'
+		#cfg_access2 = self.cfg_provider.createInstanceWithArguments(
+			#'com.sun.star.configuration.ConfigurationAccess', (cfg_property2,))
+		#intro = ctx.ServiceManager.createInstanceWithContext(
+			#'com.sun.star.beans.Introspection', self.ctx)
 		for n in self.cfg_elems:
-			prop = self.cfg_access.getPropertyValue(n)
+			#prop = self.cfg_access.getPropertyValue(n)
+			#if prop is None:
+				#prop = cfg_access2.getPropertyDefault(n)
+			#values = {}
+			#values['key'] = prop.getPropertyValue('key')
+			#values['style'] = prop.getPropertyValue('style')
+			#values['key_alt'] = prop.getPropertyValue('key_alt')
+			#iaccess = intro.inspect(prop)
+			#if values['key'] is None or values['style'] is None:
+				#prop = cfg_access2.getByHierarchicalName(cfg_property2.Value + '/' + n)
+				##o = prop.queryInterface(XPropertyState)
+				#values = {}
+				#values['key'] = o.getPropertyDefault('key')
+				#values['style'] = prop.getPropertyDefault('style')
+				#values['key_alt'] = prop.getPropertyDefault('key_alt')
+			#if values['key'] is None:
+				#values['key'] = self.def_cfg[n]['key']\
+					#[locale.getdefaultlocale()[0].replace('_', '-')]
 			values = {}
-			values['key'] = prop.getPropertyValue('key')
-			values['style'] = prop.getPropertyValue('style')
-			values['key_alt'] = prop.getPropertyValue('key_alt')
+			values['key'] = self.getValueOrDefault(n, 'key')
+			values['style'] = self.getValueOrDefault(n, 'style')
+			values['key_alt'] = self.getValueOrDefault(n, 'key_alt')
 			self.configuration[n] = values
 
-	def get_config(self, group, key):
-		return self.configuration[group][key]
+	def saveData(self):
+		for n in self.cfg_elems:
+			cfg_leaf = self.cfg_access.getByName(n)
+			cfg_leaf.setPropertyValue('key', self.configuration[n]['key'])
+			cfg_leaf.setPropertyValue('style', self.configuration[n]['style'])
+			if 'key_alt' in self.configuration[n]:
+				cfg_leaf.setPropertyValue('key_alt', self.configuration[n]['key_alt'])
+			self.cfg_access.commitChanges()
+
+	# ------------------- Parsing default data (see comment at the top):
+	def loadDefaultData(self):
+		global def_cfg_got_headers, default_configuration, def_cfg_last_header,\
+			def_cfg_last_prop, def_cfg_last_lang, def_cfg_read_data
+
+		def_cfg_got_headers = False
+		def_cfg_read_data = False
+		default_configuration = {}
+		def_cfg_last_header = ''
+		def_cfg_last_prop = ''
+		def_cfg_last_lang = ''
+
+		p = xml.parsers.expat.ParserCreate()
+		p.StartElementHandler = def_cfg_start_element
+		p.CharacterDataHandler = def_cfg_char_data
+		script_path = os.path.dirname(sys.argv[0])
+		if script_path is None:
+			script_path = ''
+		if script_path != '':
+			script_path += '/'
+		try:
+			# try with a file first (works in test mode)
+			f = open(script_path + '../KeyParaStocX-dialog/config-data.xcu', 'rb')
+			p.ParseFile(f)
+			f.close()
+		except:
+			# Parse data pasted in by 'sed' using 'make' (works in the extension):
+			p.Parse('\
+			')
+		self.def_cfg = default_configuration
 
 # ------------------- Component registration:
 
@@ -240,5 +384,5 @@ if __name__ == '__main__':
 		print('style: "' + str(k.configuration[n]['style']) + '"')
 		if 'key_alt' in k.configuration[n]:
 			print('key_alt: "' + str(k.configuration[n]['key_alt']) + '"')
-	k.handleExternalEvent(None, 'ok')
 	#print (k.configuration)
+	print(default_configuration)
