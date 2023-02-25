@@ -124,7 +124,6 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		self.cfg_property = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
 		self.cfg_property.Name = 'nodepath'
 		self.cfg_property.Handle = 0
-		##self.cfg_property.State = uno.getConstantByName('com.sun.star.beans.PropertyState.DIRECT_VALUE')
 		# Using 'DIRECT_VALUE' can disturb reading default values
 		#self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DIRECT_VALUE')
 		#self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DEFAULT_VALUE')
@@ -266,37 +265,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 	def loadData(self):
 		# set an internal variable, allow access from Basic
 		self.configuration = {}
-		#cfg_property2 = uno.createUnoStruct('com.sun.star.beans.PropertyValue')
-		#cfg_property2.Name = 'nodepath'
-		##self.cfg_property.Handle = 0
-		###self.cfg_property.State = uno.getConstantByName('com.sun.star.beans.PropertyState.DIRECT_VALUE')
-		##self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DIRECT_VALUE')
-		##cfg_property2.State = uno.Enum('com.sun.star.beans.PropertyState', 'AMBIGUOUS_VALUE')
-		#cfg_property2.State = uno.Enum('com.sun.star.beans.PropertyState', 'DEFAULT_VALUE')
-		#cfg_property2.Value = '/@@IDENTIFIER@@.options.KeyParaStocX/Headers'
-		#cfg_access2 = self.cfg_provider.createInstanceWithArguments(
-			#'com.sun.star.configuration.ConfigurationAccess', (cfg_property2,))
-		#intro = ctx.ServiceManager.createInstanceWithContext(
-			#'com.sun.star.beans.Introspection', self.ctx)
 		for n in self.cfg_elems:
-			#prop = self.cfg_access.getPropertyValue(n)
-			#if prop is None:
-				#prop = cfg_access2.getPropertyDefault(n)
-			#values = {}
-			#values['key'] = prop.getPropertyValue('key')
-			#values['style'] = prop.getPropertyValue('style')
-			#values['key_alt'] = prop.getPropertyValue('key_alt')
-			#iaccess = intro.inspect(prop)
-			#if values['key'] is None or values['style'] is None:
-				#prop = cfg_access2.getByHierarchicalName(cfg_property2.Value + '/' + n)
-				##o = prop.queryInterface(XPropertyState)
-				#values = {}
-				#values['key'] = o.getPropertyDefault('key')
-				#values['style'] = prop.getPropertyDefault('style')
-				#values['key_alt'] = prop.getPropertyDefault('key_alt')
-			#if values['key'] is None:
-				#values['key'] = self.def_cfg[n]['key']\
-					#[locale.getdefaultlocale()[0].replace('_', '-')]
 			values = {}
 			values['key'] = self.getValueOrDefault(n, 'key')
 			values['style'] = self.getValueOrDefault(n, 'style')
