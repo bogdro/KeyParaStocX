@@ -59,7 +59,7 @@
 				<value xml:lang="pl-PL">Część</value>
 			</prop>
 			<prop oor:name="style" oor:type="xs:string" oor:localized="true">
-				<value xml:lang="en-US">Header 1</value>
+				<value xml:lang="en-US">Heading 1</value>
 				<value xml:lang="pl-PL">Nagłówek 1</value>
 			</prop>
 			<prop oor:name="key_alt" oor:type="xs:string" oor:localized="true">
@@ -73,7 +73,7 @@
 				<value xml:lang="pl-PL">Księga</value>
 			</prop>
 			<prop oor:name="style" oor:type="xs:string" oor:localized="true">
-				<value xml:lang="en-US">Header 2</value>
+				<value xml:lang="en-US">Heading 2</value>
 				<value xml:lang="pl-PL">Nagłówek 2</value>
 			</prop>
 			<prop oor:name="key_alt" oor:type="xs:string" oor:localized="true">
@@ -87,7 +87,7 @@
 				<value xml:lang="pl-PL">Tytuł</value>
 			</prop>
 			<prop oor:name="style" oor:type="xs:string" oor:localized="true">
-				<value xml:lang="en-US">Header 3</value>
+				<value xml:lang="en-US">Heading 3</value>
 				<value xml:lang="pl-PL">Nagłówek 3</value>
 			</prop>
 			<prop oor:name="key_alt" oor:type="xs:string" oor:localized="true">
@@ -101,7 +101,7 @@
 				<value xml:lang="pl-PL">Dział</value>
 			</prop>
 			<prop oor:name="style" oor:type="xs:string" oor:localized="true">
-				<value xml:lang="en-US">Header 4</value>
+				<value xml:lang="en-US">Heading 4</value>
 				<value xml:lang="pl-PL">Nagłówek 4</value>
 			</prop>
 			<prop oor:name="key_alt" oor:type="xs:string" oor:localized="true">
@@ -115,7 +115,7 @@
 				<value xml:lang="pl-PL">Rozdział</value>
 			</prop>
 			<prop oor:name="style" oor:type="xs:string" oor:localized="true">
-				<value xml:lang="en-US">Header 5</value>
+				<value xml:lang="en-US">Heading 5</value>
 				<value xml:lang="pl-PL">Nagłówek 5</value>
 			</prop>
 			<prop oor:name="key_alt" oor:type="xs:string" oor:localized="true">
@@ -129,7 +129,7 @@
 				<value xml:lang="pl-PL">Oddział</value>
 			</prop>
 			<prop oor:name="style" oor:type="xs:string" oor:localized="true">
-				<value xml:lang="en-US">Header 6</value>
+				<value xml:lang="en-US">Heading 6</value>
 				<value xml:lang="pl-PL">Nagłówek 6</value>
 			</prop>
 			<prop oor:name="key_alt" oor:type="xs:string" oor:localized="true">
@@ -143,7 +143,7 @@
 				<value xml:lang="pl-PL">Art\.</value>
 			</prop>
 			<prop oor:name="style" oor:type="xs:string" oor:localized="true">
-				<value xml:lang="en-US">Header 7</value>
+				<value xml:lang="en-US">Heading 7</value>
 				<value xml:lang="pl-PL">Nagłówek 7</value>
 			</prop>
 			<prop oor:name="key_alt" oor:type="xs:string" oor:localized="true">
