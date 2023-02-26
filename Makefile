@@ -74,8 +74,8 @@ $(NAME)-$(VER)$(OFFICE_PACK_EXT): $(shell find $(EXTENSION_FILES) -type f) \
 	find $(NAME)-$(VER) -type f -exec $(SUBST_ID) '{}' \;
 	$(COPY) KeyParaStocX-dialog/config-data.xcu $(TMP_CFG_FILE)
 	$(SED) 's/$$/\\/' $(TMP_CFG_FILE)
-	$(RMDIR) $(TMP_CFG_FILE)
 	$(SED) '/p.Parse(/ r $(TMP_CFG_FILE)' $(NAME)-$(VER)/components/Config.py
+	$(RMDIR) $(TMP_CFG_FILE)
 	cd $(NAME)-$(VER) && $(OFFICE_PACK) ../$(NAME)-$(VER)$(OFFICE_PACK_EXT) .
 	$(RMDIR) $(NAME)-$(VER)
 
