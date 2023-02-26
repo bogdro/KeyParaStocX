@@ -40,7 +40,7 @@ Sub Main
 	ChangeLastLevel (svc.getByName(&quot;head7/key&quot;), svc.getByName(&quot;head7/key_alt&quot;), svc.getByName(&quot;head7/style&quot;))
 	AddTableOfContents
 
-	msgbox &quot;Done!&quot;
+	msgbox &quot;OK!&quot;
 
 End Sub
 
