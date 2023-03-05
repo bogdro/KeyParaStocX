@@ -7,6 +7,8 @@
 #  searches for the configured keywords in a text, changes their style and
 #  builds a Table of Contents for them.
 #
+# Project homepage: https://keyparastocx.sourceforge.io/
+#
 # This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License
 #  as published by the Free Software Foundation; either version 3
@@ -23,7 +25,7 @@
 
 NAME = KeyParaStocX
 IDENTIFIER = vnd.bogdandrozdowski.keyparastocx
-VER = 0.9.0
+VER = 1.0.0
 
 RMDIR = /bin/rm -fr
 # when using '-p', no error is generated when the directory exists

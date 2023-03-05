@@ -10,6 +10,8 @@ Option Explicit
 &apos; This file is part of the OpenOffice / LibreOffice extension KeyParaStocX
 &apos;  (Keyword-based Paragraph Styling and Table of Contents eXtension).
 &apos;
+&apos; Project homepage: https://keyparastocx.sourceforge.io/
+&apos;
 &apos; This program is free software; you can redistribute it and/or
 &apos;  modify it under the terms of the GNU General Public License
 &apos;  as published by the Free Software Foundation; either version 3
