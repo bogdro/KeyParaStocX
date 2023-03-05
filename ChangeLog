@@ -1,3 +1,35 @@
+2023-02-26	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+
+	* KeyParaStocX 1.0.0:
+	  Add support for default configuration, not requiring the user to
+	  manually save the options. Added internationalization support in
+	  configuration. Small fixes. A second icon added. Code clean-up.
+	* KeyParaStocX/Process.xba: Changed the finishing message to just
+	  "OK". Removed unused code.
+	* components/Config.py (hasByName): Fixed an error in the (unused)
+	  function.
+	* components/Config.py (getByName): Use the class attribute instead
+	  of the get_config() method.
+	* components/Config.py (def_cfg_start_element, def_cfg_char_data,
+	  KeyParaStocXConfig.loadDefaultData): Added reading the default
+	  configuration.
+	* components/Config.py (handleExternalEvent, saveData): Moved saving
+	  the configuration to a separate method.
+	* components/Config.py (getValueOrDefault): A new method that returns
+	  the current configuration setting, or the default one.
+	* components/Config.py (loadData): Use the getValueOrDefault() method.
+	* components/Config.py (get_config): Method removed (couldn't be used
+	  from Basic).
+	* KeyParaStocX-dialog/config-data.xcu: Change the syntax for the file
+	  to be insertable into Python code. Fix heading style names in en-US.
+	* Makefile: Add commands to insert the default configuration into the
+	  components/Config.py file.
+	* components/Config.py: Code clean-up and simplifications.
+	* KeyParaStocX-dialog/Options*: Added i18n to the options' dialog.
+	* icons/KeyParaStocX-main-icon.svg: Added a separate icon for the
+	  Extension Manager.
+	* icons/KeyParaStocX-icon.svg: Added metadata.
+
 2023-02-21	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
 	* KeyParaStocX 0.9.0:
