@@ -262,8 +262,9 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			if lang_params is not None:
 				lang_code = locale.getdefaultlocale()[0]
 				if lang_code is not None:
-					value = self.def_cfg[name][key]\
-						[lang_code.replace('_', '-')]
+					lang_code_norm = lang_code.replace('_', '-')
+					if lang_code_norm in self.def_cfg[name][key]:
+						value = self.def_cfg[name][key][lang_code_norm]
 		if value is None:
 			value = self.def_cfg[name][key]['en-US']
 		return value
