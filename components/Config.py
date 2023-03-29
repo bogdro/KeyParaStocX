@@ -302,13 +302,14 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		p = xml.parsers.expat.ParserCreate()
 		p.StartElementHandler = def_cfg_start_element
 		p.CharacterDataHandler = def_cfg_char_data
-		script_path = os.path.dirname(sys.argv[0])
-		if script_path is None:
-			script_path = ''
-		if script_path != '':
-			script_path += '/'
 		try:
 			# try with a file first (works in test mode)
+			# sys.argv is not always available
+			script_path = os.path.dirname(sys.argv[0])
+			if script_path is None:
+				script_path = ''
+			if script_path != '':
+				script_path += '/'
 			f = open(script_path + '../KeyParaStocX-dialog/config-data.xcu', 'rb')
 			p.ParseFile(f)
 			f.close()
