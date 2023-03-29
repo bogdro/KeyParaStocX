@@ -1,3 +1,14 @@
+2023-03-29	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+
+	* KeyParaStocX 1.0.1:
+	  Fix for languages missing in the default configuration. Fixed
+	  running under a special Python without sys.argv. Thanks to
+	  Matthias Seidel for reporting and help with testing.
+	* icons/KeyParaStocX-main-icon.svg: Small fix in the icon.
+	* components/Config.py (getValueOrDefault): Fix for missing languages.
+	* components/Config.py (loadDefaultData): Catch exceptions also in the
+	  case sys.argv is missing and proceed with loading the defaults.
+
 2023-02-26	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
 	* KeyParaStocX 1.0.0:
