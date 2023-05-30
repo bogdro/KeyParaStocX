@@ -15,10 +15,10 @@
 name: Pysa
 
 on:
-  push:
-    branches: [ "master", dev, main ]
-  pull_request:
-    branches: [ "master" ]
+  #push:
+  #  branches: [ "master", dev, main ]
+  #pull_request:
+  #  branches: [ "master" ]
   workflow_dispatch:
   #schedule:
   #  - cron: '32 6 1 * *'
