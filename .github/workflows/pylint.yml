@@ -3,10 +3,10 @@ name: Pylint
 #on: [push]
 
 on:
-  push:
-    branches: [ "master", dev, main ]
-  pull_request:
-    branches: [ "master" ]
+#  push:
+#    branches: [ "master", dev, main ]
+#  pull_request:
+#    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
