@@ -47,6 +47,10 @@ from com.sun.star.container import XNameAccess
 from com.sun.star.lang import XServiceInfo, XServiceName, XTypeProvider
 from com.sun.star.uno import XInterface
 
+identifier = '@@IDENTIFIER@@'
+if '@' in identifier: # not substituted - under unit tests
+	identifier = 'vnd.bogdandrozdowski.keyparastocx'
+
 # ------------------- Reading the default configuration:
 # Tried:
 # - prop.getPropertyDefault() from XPropertyWithState,
@@ -113,10 +117,10 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			XInterface,
 			]
 		self.uniqid = uuid.uuid4().bytes;
-		self.name = '@@IDENTIFIER@@.KeyParaStocXConfig'
+		self.name = identifier + '.KeyParaStocXConfig'
 		self.serviceNames = [
 			'com.sun.star.comp.extensionoptions.OptionsEventHandler',
-			'@@IDENTIFIER@@.KeyParaStocXConfig'
+			identifier + '.KeyParaStocXConfig'
 			]
 		self.event_method_name = 'external_event'
 		self.configuration = {}
@@ -130,7 +134,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		#self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DIRECT_VALUE')
 		#self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DEFAULT_VALUE')
 		# config-schema.xcs:
-		self.cfg_property.Value = '/@@IDENTIFIER@@.options.KeyParaStocX/Headers'
+		self.cfg_property.Value = '/' + identifier + '.options.KeyParaStocX/Headers'
 		self.cfg_elems = ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7')
 		self.cfg_access = self.cfg_provider.createInstanceWithArguments(
 			'com.sun.star.configuration.ConfigurationUpdateAccess', (self.cfg_property,))
@@ -325,8 +329,8 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 # https://wiki.openoffice.org/wiki/UNO_component_packaging
 g_ImplementationHelper = unohelper.ImplementationHelper()
 g_ImplementationHelper.addImplementation(KeyParaStocXConfig,
-	'@@IDENTIFIER@@.KeyParaStocXConfig',
-	('@@IDENTIFIER@@.KeyParaStocXConfig',),
+	identifier + '.KeyParaStocXConfig',
+	(identifier + '.KeyParaStocXConfig',),
 )
 
 # ------------------- Testing:
