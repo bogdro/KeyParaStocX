@@ -1,6 +1,6 @@
 # KeyParaStocX Makefile
 #
-# Copyright (C) 2023 Bogdan 'bogdro' Drozdowski, bogdro (at) users . sourceforge . net
+# Copyright (C) 2023-2024 Bogdan 'bogdro' Drozdowski, bogdro (at) users . sourceforge . net
 #
 # This file is part of KeyParaStocX (Keyword-based Paragraph Styling and
 #  Table of Contents eXtension), an OpenOffice / LibreOffice extension that
@@ -31,7 +31,13 @@ RMDIR = /bin/rm -fr
 # when using '-p', no error is generated when the directory exists
 MKDIR = /bin/mkdir -p
 COPY = /bin/cp -pRf
-SED = /bin/sed -i
+SED = /bin/sed
+SED_OPTS = -i
+GREP = /bin/grep
+AWK = /usr/bin/awk
+
+PYTHON = /usr/bin/python
+PYTEST = /usr/bin/pytest
 
 # Use the GNU tar format
 # ifneq ($(shell tar --version | grep -i bsd),)
@@ -54,11 +60,13 @@ UNOPKG = $(OFFICEDIR)/program/unopkg
 
 EXTENSION_FILES = $(NAME) Addons.xcu components description.xml icons \
 	KeyParaStocX-dialog META-INF Office pkg-desc registration COPYING
-DIST_FILES = $(EXTENSION_FILES) AUTHORS ChangeLog INSTALL Makefile NEWS README
+DIST_FILES = $(EXTENSION_FILES) AUTHORS ChangeLog INSTALL Makefile NEWS \
+	README test
+TESTS = test/test_load.py
 
 TMP_CFG_FILE = KeyParaStocX-dialog/config-data-tmp.xcu
-SUBST_VERSION = $(SED) "s/@@VERSION@@/$(VER)/g"
-SUBST_ID = $(SED) "s/@@IDENTIFIER@@/$(IDENTIFIER)/g"
+SUBST_VERSION = $(SED) $(SED_OPTS) "s/@@VERSION@@/$(VER)/g"
+SUBST_ID = $(SED) $(SED_OPTS) "s/@@IDENTIFIER@@/$(IDENTIFIER)/g"
 
 all:	dist
 
@@ -75,8 +83,8 @@ $(NAME)-$(VER)$(OFFICE_PACK_EXT): $(shell find $(EXTENSION_FILES) -type f) \
 	find $(NAME)-$(VER) -type f -exec $(SUBST_VERSION) '{}' \;
 	find $(NAME)-$(VER) -type f -exec $(SUBST_ID) '{}' \;
 	$(COPY) KeyParaStocX-dialog/config-data.xcu $(TMP_CFG_FILE)
-	$(SED) 's/$$/\\/' $(TMP_CFG_FILE)
-	$(SED) '/p.Parse(/ r $(TMP_CFG_FILE)' $(NAME)-$(VER)/components/Config.py
+	$(SED) $(SED_OPTS) 's/$$/\\/' $(TMP_CFG_FILE)
+	$(SED) $(SED_OPTS) '/p.Parse(/ r $(TMP_CFG_FILE)' $(NAME)-$(VER)/components/Config.py
 	$(RMDIR) $(TMP_CFG_FILE)
 	cd $(NAME)-$(VER) && $(OFFICE_PACK) ../$(NAME)-$(VER)$(OFFICE_PACK_EXT) .
 	$(RMDIR) $(NAME)-$(VER)
@@ -96,10 +104,14 @@ $(NAME)-$(VER)$(PACK1_EXT)$(PACK2_EXT): $(shell find $(DIST_FILES) -type f) \
 install: $(NAME)-$(VER)$(OFFICE_PACK_EXT)
 	$(UNOPKG) add $(NAME)-$(VER)$(OFFICE_PACK_EXT)
 
+check:
+	PYTHONPATH=`$(PYTHON) -m sysconfig | $(GREP) purelib | $(AWK) '{print $$3}' | $(SED) 's/"//g'`:. \
+		$(OFFICEDIR)/program/python $(PYTEST) $(TESTS)
+
 uninstall:
 	$(UNOPKG) remove $(IDENTIFIER)
 
 verify-install:
 	$(UNOPKG) list $(IDENTIFIER)
 
-.PHONY: all dist dist-bin dist-src install uninstall verify-install
+.PHONY: all check dist dist-bin dist-src install uninstall verify-install
