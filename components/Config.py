@@ -315,9 +315,14 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 				script_path = ''
 			if script_path != '':
 				script_path += '/'
-			f = open(script_path + '../KeyParaStocX-dialog/config-data.xcu', 'rb')
-			p.ParseFile(f)
-			f.close()
+			try:
+				f = open(script_path + '../KeyParaStocX-dialog/config-data.xcu', 'rb')
+				p.ParseFile(f)
+				f.close()
+			except:
+				f = open('KeyParaStocX-dialog/config-data.xcu', 'rb')
+				p.ParseFile(f)
+				f.close()
 		except:
 			# Parse data pasted in by 'sed' using 'make' (works in the extension):
 			p.Parse('\
