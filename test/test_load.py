@@ -25,7 +25,6 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import locale
 import os
 import pytest
 import time
@@ -34,8 +33,6 @@ import uno
 from components.Config import *
 
 def test_load():
-	locale.setlocale(locale.LC_ALL, 'en_US')
-
 	pidfile_name = 'office.pid'
 	# Start the office suite in the background:
 	os.system("/opt/libreoffice/program/soffice '--accept=socket,host=127.0.0.1,port=2345;urp;' --nologo --invisible --headless --pidfile="
