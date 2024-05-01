@@ -54,20 +54,21 @@ def test_load():
 			pass
 
 	k = KeyParaStocXConfig(ctx)
-	#k.loadData()
-	#print('k.configuration: ' + str(k.configuration))
-	#print('k.def_cfg: ' + str(k.def_cfg))
-	#print('default_configuration: ' + str(default_configuration))
+	k.loadData()
 
-	#assert str(k.def_cfg['head1']['key']) == 'Part'
-	#assert str(k.def_cfg['head2']['key']) == 'Book'
-	#assert str(k.def_cfg['head3']['key']) == 'Title'
-	#assert str(k.def_cfg['head4']['key']) == 'Section'
-	#assert str(k.def_cfg['head5']['key']) == 'Chapter'
-	#assert str(k.def_cfg['head6']['key']) == 'Subchapter'
-	#assert str(k.def_cfg['head7']['key']) == 'Art.'
-	#for n in range(1, 8):
-		#assert str(k.def_cfg['head' + n]['style']) == 'Heading ' + n
+	print('k.configuration: ' + str(k.configuration))
+	print('k.def_cfg: ' + str(k.def_cfg))
+	print('default_configuration: ' + str(default_configuration))
+
+	assert str(k.def_cfg['head1']['key']['en-US']) == 'Part'
+	assert str(k.def_cfg['head2']['key']['en-US']) == 'Book'
+	assert str(k.def_cfg['head3']['key']['en-US']) == 'Title'
+	assert str(k.def_cfg['head4']['key']['en-US']) == 'Section'
+	assert str(k.def_cfg['head5']['key']['en-US']) == 'Chapter'
+	assert str(k.def_cfg['head6']['key']['en-US']) == 'Subchapter'
+	assert str(k.def_cfg['head7']['key']['en-US']) == 'Art\\.'
+	for n in range(1, 8):
+		assert str(k.def_cfg['head' + str(n)]['style']['en-US']) == 'Heading ' + str(n)
 
 	# Stop the office suite:
 	if os.path.exists(pidfile_name):
