@@ -27,9 +27,10 @@ Various versions of KeyParaStocX have been successfully used with the
  following applications in the following versions:
 
 1. LibreOffice:
-	- 7.x (checked: 7.5.0.3)
+	- 7.x (checked: 7.5.0.3, 7.6.1.2)
+	- 24.x (checked: 24.2.3.2)
 2. Apache OpenOffice:
-	- 4.x (checked: 4.1.13)
+	- 4.x (checked: 4.1.13, 4.1.14)
 3. OpenOffice.org:
 	- 3.x (checked: 3.3 probably)
 
