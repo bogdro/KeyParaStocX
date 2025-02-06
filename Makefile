@@ -1,6 +1,6 @@
 # KeyParaStocX Makefile
 #
-# Copyright (C) 2023-2024 Bogdan 'bogdro' Drozdowski, bogdro (at) users . sourceforge . net
+# Copyright (C) 2023-2025 Bogdan 'bogdro' Drozdowski, bogdro (at) users . sourceforge . net
 #
 # This file is part of KeyParaStocX (Keyword-based Paragraph Styling and
 #  Table of Contents eXtension), an OpenOffice / LibreOffice extension that

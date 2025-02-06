@@ -2,7 +2,7 @@
 #
 # KeyParaStocX - the module unit test
 #
-# Copyright (C) 2024 Bogdan 'bogdro' Drozdowski, bogdro (at) users . sourceforge . net
+# Copyright (C) 2024-2025 Bogdan 'bogdro' Drozdowski, bogdro (at) users . sourceforge . net
 #
 # This file is part of KeyParaStocX (Keyword-based Paragraph Styling and
 #  Table of Contents eXtension), an OpenOffice / LibreOffice extension that

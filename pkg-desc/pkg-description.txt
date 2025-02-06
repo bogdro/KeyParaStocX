@@ -1,5 +1,5 @@
 KeyParaStocX @@VERSION@@
-Copyright (c) 2011-2023  Bogdan Drozdowski
+Copyright (c) 2011-2025  Bogdan Drozdowski
 
 KeyParaStocX (Keyword-based Paragraph Styling and Table of Contents eXtension) is a LibreOffice/Apache OpenOffice/OpenOffice.org extension that searches for the configured keywords in a text, changes their style and builds a Table of Contents for them.
 The extension was formerly called "Pożeracz ustaw" or "PozeraczUstaw".

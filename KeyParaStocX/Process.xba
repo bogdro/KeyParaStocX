@@ -5,7 +5,7 @@ Option Explicit
 
 &apos; KeyParaStocX - main module
 &apos;
-&apos; Copyright (C) 2011-2023 Bogdan &apos;bogdro&apos; Drozdowski, bogdro (at) users . sourceforge . net
+&apos; Copyright (C) 2011-2025 Bogdan &apos;bogdro&apos; Drozdowski, bogdro (at) users . sourceforge . net
 &apos;
 &apos; This file is part of the OpenOffice / LibreOffice extension KeyParaStocX
 &apos;  (Keyword-based Paragraph Styling and Table of Contents eXtension).
