@@ -54,6 +54,10 @@ Sub ChangeWordParaStyle (theWord as string, newStyle as string)
 	Dim i as Integer
 	Dim f as object
 
+	If theWord = &quot;&quot; Or newStyle = &quot;&quot; Then
+		Exit Sub
+	End If
+
 	Doc = ThisComponent
 
 	replaceDesc = Doc.createReplaceDescriptor
@@ -84,6 +88,10 @@ Sub ChangeLastLevel (key as string, alt_key as string, newStyle as string)
 	Dim f as object
 	Dim Cursor as object
 
+	If key = &quot;&quot; Or newStyle = &quot;&quot; Then
+		Exit Sub
+	End If
+
 	Doc = ThisComponent
 
 	replaceDesc = Doc.createReplaceDescriptor
@@ -109,6 +117,10 @@ Sub ChangeLastLevel (key as string, alt_key as string, newStyle as string)
 	Next
 
 	If find.Count = 0 Then
+
+		If alt_key = &quot;&quot; Or newStyle = &quot;&quot; Then
+			Exit Sub
+		End If
 
 		&apos; primary key not found - change the secondary instead
 		replaceDesc = Doc.createReplaceDescriptor
