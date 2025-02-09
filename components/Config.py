@@ -144,10 +144,10 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		self.loadDefaultData()
 
 	# ------------------- XContainerWindowEventHandler:
-	def callHandlerMethod(self, xWindow, eventObject, methodName):
-		if methodName == self.event_method_name:
+	def callHandlerMethod(self, container_window, event_object, method_name):
+		if method_name == self.event_method_name:
 			try:
-				return self.handleExternalEvent(xWindow, eventObject);
+				return self.handleExternalEvent(container_window, event_object);
 			except Exception as ex:
 				pass
 		return False
@@ -159,8 +159,8 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 	def getImplementationName(self):
 		return self.name
 
-	def supportsService(self, svcName):
-		return svcName in self.serviceNames
+	def supportsService(self, service_name):
+		return service_name in self.serviceNames
 
 	def getSupportedServiceNames(self):
 		return self.serviceNames
@@ -184,9 +184,9 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		#return self.uniqid
 
 	# ------------------- XNameAccess:
-	def getByName (self, aName):
+	def getByName (self, config_entry_name):
 		self.loadData()
-		parts = aName.split('/')
+		parts = config_entry_name.split('/')
 		group = parts[0]
 		key = parts[1]
 		return self.configuration[group][key]
@@ -199,9 +199,9 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 				ret.append(n + '/' + k)
 		return ret;
 
-	def hasByName (self, aName):
+	def hasByName (self, config_entry_name):
 		self.loadData()
-		parts = aName.split('/')
+		parts = config_entry_name.split('/')
 		group = parts[0]
 		key = parts[1]
 		if group in self.configuration:
@@ -226,33 +226,33 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		#pass
 
 	# -------------------
-	def handleExternalEvent (self, xWindow, eventObject):
-		methodName = str(eventObject).lower()
-		if methodName == 'ok':
+	def handleExternalEvent (self, container_window, event_object):
+		method_name = str(event_object).lower()
+		if method_name == 'ok':
 			# save data:
-			if xWindow is None or xWindow.Model.Name is None:
+			if container_window is None or container_window.Model.Name is None:
 				return False;	# work only from the GUI
 			self.configuration = {}
 			for n in self.cfg_elems:
 				values = {}
-				values['key'] = xWindow.getControl(n + '_key').getText()
-				values['style'] = xWindow.getControl(n + '_style').getText()
-				if xWindow.getControl(n + '_key_alt'):
-					values['key_alt'] = xWindow.getControl(n + '_key_alt').getText()
+				values['key'] = container_window.getControl(n + '_key').getText()
+				values['style'] = container_window.getControl(n + '_style').getText()
+				if container_window.getControl(n + '_key_alt'):
+					values['key_alt'] = container_window.getControl(n + '_key_alt').getText()
 				self.configuration[n] = values
 			self.saveData()
-		elif methodName == 'back' or methodName == 'initialize':
+		elif method_name == 'back' or method_name == 'initialize':
 			# load data
 			self.loadData()
 			# store into controls, if any
-			if xWindow and xWindow.Model.Name:
+			if container_window and container_window.Model.Name:
 				for n in self.cfg_elems:
 					if self.configuration[n]['key'] is not None:
-						xWindow.getControl(n + '_key').setText(self.configuration[n]['key'])
+						container_window.getControl(n + '_key').setText(self.configuration[n]['key'])
 					if self.configuration[n]['style'] is not None:
-						xWindow.getControl(n + '_style').setText(self.configuration[n]['style'])
-					if self.configuration[n]['key_alt'] is not None and xWindow.getControl(n + '_key_alt'):
-						xWindow.getControl(n + '_key_alt').setText(self.configuration[n]['key_alt'])
+						container_window.getControl(n + '_style').setText(self.configuration[n]['style'])
+					if self.configuration[n]['key_alt'] is not None and container_window.getControl(n + '_key_alt'):
+						container_window.getControl(n + '_key_alt').setText(self.configuration[n]['key_alt'])
 		return True
 
 	def getValueOrDefault(self, name, key):
