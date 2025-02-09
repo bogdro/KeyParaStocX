@@ -148,7 +148,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		if method_name == self.event_method_name:
 			try:
 				return self.handleExternalEvent(container_window, event_object);
-			except Exception as ex:
+			except Exception:
 				pass
 		return False
 
@@ -319,11 +319,11 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 				f = open(script_path + '../KeyParaStocX-dialog/config-data.xcu', 'rb')
 				p.ParseFile(f)
 				f.close()
-			except:
+			except Exception:
 				f = open('KeyParaStocX-dialog/config-data.xcu', 'rb')
 				p.ParseFile(f)
 				f.close()
-		except:
+		except Exception:
 			# Parse data pasted in by 'sed' using 'make' (works in the extension):
 			p.Parse('\
 			')
@@ -360,7 +360,7 @@ if __name__ == '__main__':
 			ctx = resolver.resolve(
 				'uno:socket,host=127.0.0.1,port=2345;urp;StarOffice.ComponentContext')
 			time.sleep(1)
-		except:
+		except Exception:
 			pass
 
 	k = KeyParaStocXConfig (ctx)
