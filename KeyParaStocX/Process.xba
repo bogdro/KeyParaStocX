@@ -28,154 +28,148 @@ Option Explicit
 
 Sub Main
 
-	Dim svc as object
-	Dim a as string
-	
-	svc = CreateUnoService(&quot;vnd.bogdandrozdowski.keyparastocx.KeyParaStocXConfig&quot;)
+	Dim Svc As Object
+
+	Svc = CreateUnoService(&quot;vnd.bogdandrozdowski.keyparastocx.KeyParaStocXConfig&quot;)
 	&apos; first, change the words, then make new paragraphs
-	ChangeWordParaStyle (svc.getByName(&quot;head1/key&quot;), svc.getByName(&quot;head1/style&quot;))
-	ChangeWordParaStyle (svc.getByName(&quot;head2/key&quot;), svc.getByName(&quot;head2/style&quot;))
-	ChangeWordParaStyle (svc.getByName(&quot;head3/key&quot;), svc.getByName(&quot;head3/style&quot;))
-	ChangeWordParaStyle (svc.getByName(&quot;head4/key&quot;), svc.getByName(&quot;head4/style&quot;))
-	ChangeWordParaStyle (svc.getByName(&quot;head5/key&quot;), svc.getByName(&quot;head5/style&quot;))
-	ChangeWordParaStyle (svc.getByName(&quot;head6/key&quot;), svc.getByName(&quot;head6/style&quot;))
-	ChangeLastLevel (svc.getByName(&quot;head7/key&quot;), svc.getByName(&quot;head7/key_alt&quot;), svc.getByName(&quot;head7/style&quot;))
+	ChangeWordParaStyle(Svc.getByName(&quot;head1/key&quot;), Svc.getByName(&quot;head1/style&quot;))
+	ChangeWordParaStyle(Svc.getByName(&quot;head2/key&quot;), Svc.getByName(&quot;head2/style&quot;))
+	ChangeWordParaStyle(Svc.getByName(&quot;head3/key&quot;), Svc.getByName(&quot;head3/style&quot;))
+	ChangeWordParaStyle(Svc.getByName(&quot;head4/key&quot;), Svc.getByName(&quot;head4/style&quot;))
+	ChangeWordParaStyle(Svc.getByName(&quot;head5/key&quot;), Svc.getByName(&quot;head5/style&quot;))
+	ChangeWordParaStyle(Svc.getByName(&quot;head6/key&quot;), Svc.getByName(&quot;head6/style&quot;))
+	ChangeLastLevel(Svc.getByName(&quot;head7/key&quot;), Svc.getByName(&quot;head7/key_alt&quot;), Svc.getByName(&quot;head7/style&quot;))
 	AddTableOfContents
 
 	msgbox &quot;OK!&quot;
 
 End Sub
 
-Sub ChangeWordParaStyle (theWord as string, newStyle as string)
+Sub ChangeWordParaStyle(WordToFind As String, NewStyle As String)
 
-	Dim Doc as object
-	Dim replaceDesc as object
-	Dim find as object
-	Dim i as Integer
-	Dim f as object
+	Dim Doc As Object
+	Dim ReplaceDesc As Object
+	Dim Find As Object
+	Dim I As Integer
+	Dim F As Object
 
-	If theWord = &quot;&quot; Or newStyle = &quot;&quot; Then
+	If WordToFind = &quot;&quot; Or NewStyle = &quot;&quot; Then
 		Exit Sub
 	End If
 
 	Doc = ThisComponent
 
-	replaceDesc = Doc.createReplaceDescriptor
-	replaceDesc.searchRegularExpression = True
-	replaceDesc.searchCaseSensitive = True
-	replaceDesc.SearchAll = True
+	ReplaceDesc = Doc.createReplaceDescriptor
+	ReplaceDesc.SearchRegularExpression = True
+	ReplaceDesc.SearchCaseSensitive = True
+	ReplaceDesc.SearchAll = True
 	&apos; &quot;\&gt;&quot; = the end of a word
 	&apos; the tab is also needed, despite the \t
-	replaceDesc.searchString = &quot;^[ \t\s	]*&quot; &amp; theWord &amp; &quot;\&gt;&quot;
+	ReplaceDesc.SearchString = &quot;^[ \t\s	]*&quot; &amp; WordToFind &amp; &quot;\&gt;&quot;
 
 	&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
-	find = doc.FindAll (replaceDesc)
-	For i = 0 to find.Count - 1
+	Find = Doc.FindAll(ReplaceDesc)
+	For I = 0 To Find.Count - 1
 
-		f = find.getByIndex (i)
-		f.ParaStyleName = newStyle
+		F = Find.getByIndex(I)
+		F.ParaStyleName = NewStyle
 
 	Next
 
 End Sub
 
-Sub ChangeLastLevel (key as string, alt_key as string, newStyle as string)
+Sub ChangeLastLevel(WordToFind As String, AlternativeWordToFind As String, NewStyle As String)
 
-	Dim Doc as object
-	Dim replaceDesc as object
-	Dim find as object
-	Dim i as Integer
-	Dim f as object
-	Dim Cursor as object
+	Dim Find As Object
 
-	If key = &quot;&quot; Or newStyle = &quot;&quot; Then
+	If WordToFind = &quot;&quot; Or NewStyle = &quot;&quot; Then
 		Exit Sub
 	End If
 
-	find = ChangeLastLevelSingleKey(&quot;^[ \t\s	]*&quot; &amp; key &amp; &quot;[ \t\s	]+[0-9]+[a-zA-Z]*\.?[ \t\s	]+(\[([^\]])+\])&quot;, newStyle)
+	Find = ChangeLastLevelSingleKey(&quot;^[ \t\s	]*&quot; &amp; WordToFind &amp; &quot;[ \t\s	]+[0-9]+[a-zA-Z]*\.?[ \t\s	]+(\[([^\]])+\])&quot;, NewStyle)
 
-	If find.Count = 0 Then
+	If Find.Count = 0 Then
 
-		If alt_key = &quot;&quot; Then
+		If AlternativeWordToFind = &quot;&quot; Then
 			Exit Sub
 		End If
 
-		find = ChangeLastLevelSingleKey(&quot;^[ \t\s	]*&quot; &amp; alt_key &amp; &quot;[ \t\s	]*[0-9]+[a-zA-Z]*\.?([ \t\s	]+(\[([^\]])+\]))?&quot;, newStyle)
+		Find = ChangeLastLevelSingleKey(&quot;^[ \t\s	]*&quot; &amp; AlternativeWordToFind &amp; &quot;[ \t\s	]*[0-9]+[a-zA-Z]*\.?([ \t\s	]+(\[([^\]])+\]))?&quot;, NewStyle)
 
 	End If
 
 End Sub
 
-Function ChangeLastLevelSingleKey (searchString as string, newStyle as string)
+Function ChangeLastLevelSingleKey(SearchString As String, NewStyle As String)
 
-	Dim Doc as object
-	Dim replaceDesc as object
-	Dim find as object
-	Dim i as Integer
-	Dim f as object
-	Dim Cursor as object
+	Dim Doc As Object
+	Dim ReplaceDesc As Object
+	Dim Find As Object
+	Dim I As Integer
+	Dim F As Object
+	Dim Cursor As Object
 
-	If searchString = &quot;&quot; Or newStyle = &quot;&quot; Then
+	If SearchString = &quot;&quot; Or NewStyle = &quot;&quot; Then
 		Exit Function
 	End If
 
 	Doc = ThisComponent
 
-	replaceDesc = Doc.createReplaceDescriptor
-	replaceDesc.searchRegularExpression = True
-	replaceDesc.searchCaseSensitive = True
-	replaceDesc.SearchAll = True
-	replaceDesc.searchString = searchString
+	ReplaceDesc = Doc.createReplaceDescriptor
+	ReplaceDesc.searchRegularExpression = True
+	ReplaceDesc.searchCaseSensitive = True
+	ReplaceDesc.SearchAll = True
+	ReplaceDesc.searchString = SearchString
 
 	&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
-	find = doc.FindAll (replaceDesc)
+	Find = Doc.FindAll(ReplaceDesc)
 	Cursor = Doc.Text.createTextCursor
-	For i = 0 to find.Count - 1
+	For I = 0 To Find.Count - 1
 
-		f = find.getByIndex (i)
+		F = Find.getByIndex(I)
 		&apos; If the word is in a table, it generates problems,
 		&apos; but we don&apos;t need to process it anyway, so we skip.
-		If IsEmpty (f.Cell) Then
-			Cursor.gotoRange (f.end, False)
+		If IsEmpty(F.Cell) Then
+			Cursor.gotoRange(F.end, False)
 			Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
-			f.ParaStyleName = newStyle
+			F.ParaStyleName = NewStyle
 		End If
 
 	Next
 
-	ChangeLastLevelSingleKey = find
+	ChangeLastLevelSingleKey = Find
 
 End Function
 
 Sub AddTableOfContents
 
-	Dim Doc as object
-	Dim DocIndices as object
-	Dim hasIndex as Boolean
-	Dim DocIndex as object
-	Dim i as Integer
-	Dim Cursor as object
+	Dim Doc As Object
+	Dim DocIndices As Object
+	Dim HasIndex As Boolean
+	Dim DocIndex As Object
+	Dim I As Integer
+	Dim Cursor As Object
 
 	Doc = ThisComponent
 	Cursor = Doc.Text.createTextCursor
 
 	DocIndices = Doc.getDocumentIndexes ()
-	hasIndex = False
+	HasIndex = False
 
 	&apos; check if a Table of Contents already exists
-	For i = 0 to DocIndices.getCount () - 1
+	For I = 0 To DocIndices.getCount() - 1
 
-		DocIndex = DocIndices.getByIndex (i)
+		DocIndex = DocIndices.getByIndex(I)
 		If DocIndex.supportsService (&quot;com.sun.star.text.ContentIndex&quot;) Then
 
-			hasIndex = True
+			HasIndex = True
 			Exit For
 
 		End If
 
 	Next
 
-	If Not hasIndex Then
+	If Not HasIndex Then
 
 		&apos; no Table of Contents - add a new one
 		DocIndex = Doc.createInstance (&quot;com.sun.star.text.ContentIndex&quot;)
