@@ -92,13 +92,40 @@ Sub ChangeLastLevel (key as string, alt_key as string, newStyle as string)
 		Exit Sub
 	End If
 
+	find = ChangeLastLevelSingleKey(&quot;^[ \t\s	]*&quot; &amp; key &amp; &quot;[ \t\s	]+[0-9]+[a-zA-Z]*\.?[ \t\s	]+(\[([^\]])+\])&quot;, newStyle)
+
+	If find.Count = 0 Then
+
+		If alt_key = &quot;&quot; Then
+			Exit Sub
+		End If
+
+		find = ChangeLastLevelSingleKey(&quot;^[ \t\s	]*&quot; &amp; alt_key &amp; &quot;[ \t\s	]*[0-9]+[a-zA-Z]*\.?([ \t\s	]+(\[([^\]])+\]))?&quot;, newStyle)
+
+	End If
+
+End Sub
+
+Function ChangeLastLevelSingleKey (searchString as string, newStyle as string)
+
+	Dim Doc as object
+	Dim replaceDesc as object
+	Dim find as object
+	Dim i as Integer
+	Dim f as object
+	Dim Cursor as object
+
+	If searchString = &quot;&quot; Or newStyle = &quot;&quot; Then
+		Exit Function
+	End If
+
 	Doc = ThisComponent
 
 	replaceDesc = Doc.createReplaceDescriptor
 	replaceDesc.searchRegularExpression = True
 	replaceDesc.searchCaseSensitive = True
 	replaceDesc.SearchAll = True
-	replaceDesc.searchString = &quot;^[ \t\s	]*&quot; &amp; key &amp; &quot;[ \t\s	]+[0-9]+[a-zA-Z]*\.?[ \t\s	]+(\[([^\]])+\])&quot;
+	replaceDesc.searchString = searchString
 
 	&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
 	find = doc.FindAll (replaceDesc)
@@ -116,38 +143,9 @@ Sub ChangeLastLevel (key as string, alt_key as string, newStyle as string)
 
 	Next
 
-	If find.Count = 0 Then
+	ChangeLastLevelSingleKey = find
 
-		If alt_key = &quot;&quot; Or newStyle = &quot;&quot; Then
-			Exit Sub
-		End If
-
-		&apos; primary key not found - change the secondary instead
-		replaceDesc = Doc.createReplaceDescriptor
-		replaceDesc.searchRegularExpression = True
-		replaceDesc.searchCaseSensitive = True
-		replaceDesc.SearchAll = True
-		replaceDesc.searchString = &quot;^[ \t\s	]*&quot; &amp; alt_key &amp; &quot;[ \t\s	]*[0-9]+[a-zA-Z]*\.?([ \t\s	]+(\[([^\]])+\]))?&quot;
-
-		&apos; &quot;replaceAll&quot; doesn&apos;t work - cannot change the paragraph style
-		find = doc.FindAll (replaceDesc)
-&apos;		Cursor = Doc.Text.createTextCursor
-		For i = 0 to find.Count - 1
-
-			f = find.getByIndex (i)
-			&apos; If the word is in a table, it generates problems,
-			&apos; but we don&apos;t need to process it anyway, so we skip.
-			If IsEmpty (f.Cell) Then
-				Cursor.gotoRange (f.end, False)
-				Doc.Text.insertControlCharacter (Cursor, com.sun.star.text.ControlCharacter.PARAGRAPH_BREAK, False)
-				f.ParaStyleName = newStyle
-			End If
-
-		Next
-
-	End If
-
-End Sub
+End Function
 
 Sub AddTableOfContents
 
