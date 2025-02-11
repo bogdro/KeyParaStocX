@@ -231,12 +231,12 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		#pass
 
 	# -------------------
-	def handleExternalEvent (self, container_window, event_object):
+	def handleExternalEvent(self, container_window, event_object):
+		if container_window is None or container_window.Model.Name is None:
+			return False;	# work only from the GUI
 		method_name = str(event_object).lower()
 		if method_name == 'ok':
 			# save data:
-			if container_window is None or container_window.Model.Name is None:
-				return False;	# work only from the GUI
 			self.configuration = {}
 			for n in self.cfg_elems:
 				values = {}
@@ -250,14 +250,13 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			# load data
 			self.loadData()
 			# store into controls, if any
-			if container_window and container_window.Model.Name:
-				for n in self.cfg_elems:
-					if self.configuration[n]['key'] is not None:
-						container_window.getControl(n + '_key').setText(self.configuration[n]['key'])
-					if self.configuration[n]['style'] is not None:
-						container_window.getControl(n + '_style').setText(self.configuration[n]['style'])
-					if self.configuration[n]['key_alt'] is not None and container_window.getControl(n + '_key_alt'):
-						container_window.getControl(n + '_key_alt').setText(self.configuration[n]['key_alt'])
+			for n in self.cfg_elems:
+				if self.configuration[n]['key'] is not None:
+					container_window.getControl(n + '_key').setText(self.configuration[n]['key'])
+				if self.configuration[n]['style'] is not None:
+					container_window.getControl(n + '_style').setText(self.configuration[n]['style'])
+				if self.configuration[n]['key_alt'] is not None and container_window.getControl(n + '_key_alt'):
+					container_window.getControl(n + '_key_alt').setText(self.configuration[n]['key_alt'])
 		return True
 
 	def getValueOrDefault(self, name, key):
