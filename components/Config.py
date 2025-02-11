@@ -268,7 +268,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		if value is None:
 			lang_params = locale.getlocale()
 			if lang_params is not None:
-				lang_code = locale.getdefaultlocale()[0]
+				lang_code = lang_params[0]
 				if lang_code is not None:
 					lang_code_norm = lang_code.replace('_', '-')
 					if lang_code_norm in self.def_cfg[name][key]:
