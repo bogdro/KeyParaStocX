@@ -267,7 +267,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		if value is None and hasattr(prop, 'getPropertyDefault'):
 			value = prop.getPropertyDefault(key)
 		if value is None:
-			lang_params = locale.getdefaultlocale()
+			lang_params = locale.getlocale()
 			if lang_params is not None:
 				lang_code = locale.getdefaultlocale()[0]
 				if lang_code is not None:
