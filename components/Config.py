@@ -51,6 +51,8 @@ identifier = '@@IDENTIFIER@@'
 if '@' in identifier: # not substituted - under unit tests
 	identifier = 'vnd.bogdandrozdowski.keyparastocx'
 
+full_module_name = identifier + '.KeyParaStocXConfig'
+
 # ------------------- Reading the default configuration:
 # Tried:
 # - prop.getPropertyDefault() from XPropertyWithState,
@@ -58,6 +60,9 @@ if '@' in identifier: # not substituted - under unit tests
 # - prop.queryInterface(XPropertyState),
 # - uno.Enum('com.sun.star.beans.PropertyState', 'DEFAULT_VALUE').
 # Nothing works. So, parse the default configuration file instead.
+attr_oor_name = 'oor:name'
+header_names = ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7')
+
 def_cfg_got_headers = False
 def_cfg_read_data = False
 default_configuration = {}
@@ -70,20 +75,20 @@ def def_cfg_start_element(name, attrs):
 	global def_cfg_got_headers, default_configuration, def_cfg_last_header,\
 		def_cfg_last_prop, def_cfg_last_lang, def_cfg_read_data
 
-	if name == 'node' and 'oor:name' in attrs and attrs['oor:name'] == 'Headers':
+	if name == 'node' and attr_oor_name in attrs and attrs[attr_oor_name] == 'Headers':
 		def_cfg_got_headers = True
 		return
 
-	if def_cfg_got_headers and name == 'node' and 'oor:name' in attrs \
-		and attrs['oor:name'] in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
+	if def_cfg_got_headers and name == 'node' and attr_oor_name in attrs \
+		and attrs[attr_oor_name] in header_names:
 
-		def_cfg_last_header = attrs['oor:name']
+		def_cfg_last_header = attrs[attr_oor_name]
 		default_configuration[def_cfg_last_header] = {}
 
-	if def_cfg_got_headers and name == 'prop' and 'oor:name' in attrs \
-		and attrs['oor:name'] in ('key', 'style', 'key_alt'):
+	if def_cfg_got_headers and name == 'prop' and attr_oor_name in attrs \
+		and attrs[attr_oor_name] in ('key', 'style', 'key_alt'):
 
-		def_cfg_last_prop = attrs['oor:name']
+		def_cfg_last_prop = attrs[attr_oor_name]
 		default_configuration[def_cfg_last_header][def_cfg_last_prop] = {}
 
 	if def_cfg_got_headers and name == 'value':
@@ -117,10 +122,10 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 			XInterface,
 			]
 		self.uniqid = uuid.uuid4().bytes;
-		self.name = identifier + '.KeyParaStocXConfig'
+		self.name = full_module_name
 		self.serviceNames = [
 			'com.sun.star.comp.extensionoptions.OptionsEventHandler',
-			identifier + '.KeyParaStocXConfig'
+			full_module_name
 			]
 		self.event_method_name = 'external_event'
 		self.configuration = {}
@@ -135,7 +140,7 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		#self.cfg_property.State = uno.Enum('com.sun.star.beans.PropertyState', 'DEFAULT_VALUE')
 		# config-schema.xcs:
 		self.cfg_property.Value = '/' + identifier + '.options.KeyParaStocX/Headers'
-		self.cfg_elems = ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7')
+		self.cfg_elems = header_names
 		self.cfg_access = self.cfg_provider.createInstanceWithArguments(
 			'com.sun.star.configuration.ConfigurationUpdateAccess', (self.cfg_property,))
 
@@ -334,8 +339,8 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 # https://wiki.openoffice.org/wiki/UNO_component_packaging
 g_ImplementationHelper = unohelper.ImplementationHelper()
 g_ImplementationHelper.addImplementation(KeyParaStocXConfig,
-	identifier + '.KeyParaStocXConfig',
-	(identifier + '.KeyParaStocXConfig',),
+	full_module_name,
+	(full_module_name,),
 )
 
 # ------------------- Testing:
@@ -365,7 +370,7 @@ if __name__ == '__main__':
 
 	k = KeyParaStocXConfig (ctx)
 	k.loadData()
-	for n in ('head1', 'head2', 'head3', 'head4', 'head5', 'head6', 'head7'):
+	for n in header_names:
 		print('key: "' + str(k.configuration[n]['key']) + '"')
 		print('style: "' + str(k.configuration[n]['style']) + '"')
 		if 'key_alt' in k.configuration[n]:
