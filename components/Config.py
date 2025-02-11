@@ -237,27 +237,34 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		method_name = str(event_object).lower()
 		if method_name == 'ok':
 			# save data:
-			self.configuration = {}
-			for n in self.cfg_elems:
-				values = {}
-				values['key'] = container_window.getControl(n + '_key').getText()
-				values['style'] = container_window.getControl(n + '_style').getText()
-				if container_window.getControl(n + '_key_alt'):
-					values['key_alt'] = container_window.getControl(n + '_key_alt').getText()
-				self.configuration[n] = values
+			self.configuration = self.readDataFromWindow(container_window)
 			self.saveData()
 		elif method_name == 'back' or method_name == 'initialize':
 			# load data
 			self.loadData()
 			# store into controls, if any
-			for n in self.cfg_elems:
-				if self.configuration[n]['key'] is not None:
-					container_window.getControl(n + '_key').setText(self.configuration[n]['key'])
-				if self.configuration[n]['style'] is not None:
-					container_window.getControl(n + '_style').setText(self.configuration[n]['style'])
-				if self.configuration[n]['key_alt'] is not None and container_window.getControl(n + '_key_alt'):
-					container_window.getControl(n + '_key_alt').setText(self.configuration[n]['key_alt'])
+			self.setWindowValuesFromConfiguration(container_window)
 		return True
+
+	def readDataFromWindow(self, container_window):
+		current_configuration = {}
+		for n in self.cfg_elems:
+			values = {}
+			values['key'] = container_window.getControl(n + '_key').getText()
+			values['style'] = container_window.getControl(n + '_style').getText()
+			if container_window.getControl(n + '_key_alt'):
+				values['key_alt'] = container_window.getControl(n + '_key_alt').getText()
+			current_configuration[n] = values
+		return current_configuration
+
+	def setWindowValuesFromConfiguration(self, container_window):
+		for n in self.cfg_elems:
+			if self.configuration[n]['key'] is not None:
+				container_window.getControl(n + '_key').setText(self.configuration[n]['key'])
+			if self.configuration[n]['style'] is not None:
+				container_window.getControl(n + '_style').setText(self.configuration[n]['style'])
+			if self.configuration[n]['key_alt'] is not None and container_window.getControl(n + '_key_alt'):
+				container_window.getControl(n + '_key_alt').setText(self.configuration[n]['key_alt'])
 
 	def getValueOrDefault(self, name, key):
 		# Get the configured or default data (see comment at the top):
