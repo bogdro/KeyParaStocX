@@ -352,34 +352,14 @@ g_ImplementationHelper.addImplementation(KeyParaStocXConfig,
 # ------------------- Testing:
 # https://wiki.openoffice.org/wiki/UNO_component_packaging
 if __name__ == '__main__':
-	import os
-	import time
+	print('Component loaded successfully')
 
-	# start the office process:
-	os.system ("/opt/libreoffice/program/soffice '-accept=socket,host=127.0.0.1,port=2345;urp;' -writer &")
+	try:
+		print('Python version: ' + sys.version)
+	except Exception:
+		pass
 
-	# Get the local context:
-	lctx = uno.getComponentContext ()
-	resolver = lctx.ServiceManager.createInstanceWithContext(
-		'com.sun.star.bridge.UnoUrlResolver', lctx)
-
-	ctx = None
-
-	# Wait until the office starts and is connected:
-	while ctx is None:
-		try:
-			ctx = resolver.resolve(
-				'uno:socket,host=127.0.0.1,port=2345;urp;StarOffice.ComponentContext')
-			time.sleep(1)
-		except Exception:
-			pass
-
-	k = KeyParaStocXConfig (ctx)
-	k.loadData()
-	for n in header_names:
-		print('key: "' + str(k.configuration[n]['key']) + '"')
-		print('style: "' + str(k.configuration[n]['style']) + '"')
-		if 'key_alt' in k.configuration[n]:
-			print('key_alt: "' + str(k.configuration[n]['key_alt']) + '"')
-	#print (k.configuration)
-	print(default_configuration)
+	try:
+		print('Python location: ' + sys.executable)
+	except Exception:
+		pass
