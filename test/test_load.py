@@ -44,10 +44,10 @@ def test_load():
 	# Wait until the office suite starts and is connected:
 	while ctx is None:
 		try:
+			time.sleep(1)
 			ctx = resolver.resolve(
 				'uno:socket,host=127.0.0.1,port=2345;urp;StarOffice.ComponentContext')
-			time.sleep(1)
-		except:
+		except Exception:
 			pass
 
 	k = KeyParaStocXConfig(ctx)
