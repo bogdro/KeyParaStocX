@@ -30,6 +30,8 @@ Sub Main
 
 	Dim Svc As Object
 
+	On Error Goto ErrorHandler
+
 	Svc = CreateUnoService(&quot;vnd.bogdandrozdowski.keyparastocx.KeyParaStocXConfig&quot;)
 	&apos; first, change the words, then make new paragraphs
 	ChangeWordParaStyle(Svc.getByName(&quot;head1/key&quot;), Svc.getByName(&quot;head1/style&quot;))
@@ -41,7 +43,12 @@ Sub Main
 	ChangeLastLevel(Svc.getByName(&quot;head7/key&quot;), Svc.getByName(&quot;head7/key_alt&quot;), Svc.getByName(&quot;head7/style&quot;))
 	AddTableOfContents
 
-	msgbox &quot;OK!&quot;
+	MsgBox &quot;OK!&quot;
+	Exit Sub
+
+ErrorHandler:
+	MsgBox &quot;Error code: &quot; + Err + Chr$(13) + &quot;Check the names of the styles in Options. You may need to use the English names like &apos;Heading 1&apos;.&quot; + Chr$(13) + Error$
+	Resume Next
 
 End Sub
 
