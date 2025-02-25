@@ -53,6 +53,33 @@ if '@' in identifier: # not substituted - under unit tests
 
 full_module_name = identifier + '.KeyParaStocXConfig'
 
+# ------------------- Reading the default language:
+
+def get_default_language_code():
+	try:
+		lang_params = locale.getdefaultlocale()
+		if lang_params is not None:
+			return lang_params[0]
+		return None
+	except Exception:
+		return None
+
+def get_language_code():
+	try:
+		lang_params = locale.getlocale()
+		if lang_params is not None:
+			lang_code = lang_params[0]
+		if lang_code is None:
+			lang_code = get_default_language_code()
+	except Exception:
+		lang_code = get_default_language_code()
+
+	if lang_code is None:
+		lang_code = 'en-US'
+	lang_code = lang_code.replace('_', '-')
+
+	return lang_code
+
 # ------------------- Reading the default configuration:
 # Tried:
 # - prop.getPropertyDefault() from XPropertyWithState,
@@ -273,13 +300,9 @@ class KeyParaStocXConfig(unohelper.Base, XContainerWindowEventHandler, XServiceI
 		if value is None and hasattr(prop, 'getPropertyDefault'):
 			value = prop.getPropertyDefault(key)
 		if value is None:
-			lang_params = locale.getlocale()
-			if lang_params is not None:
-				lang_code = lang_params[0]
-				if lang_code is not None:
-					lang_code_norm = lang_code.replace('_', '-')
-					if lang_code_norm in self.def_cfg[name][key]:
-						value = self.def_cfg[name][key][lang_code_norm]
+			lang_code = get_language_code()
+			if lang_code in self.def_cfg[name][key]:
+				value = self.def_cfg[name][key][lang_code]
 		if value is None:
 			value = self.def_cfg[name][key]['en-US']
 		return value
