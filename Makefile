@@ -25,7 +25,7 @@
 
 NAME = KeyParaStocX
 IDENTIFIER = vnd.bogdandrozdowski.keyparastocx
-VER = 1.0.1
+VER = 1.1.0
 
 RMDIR = /bin/rm -fr
 # when using '-p', no error is generated when the directory exists

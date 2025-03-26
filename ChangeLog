@@ -1,3 +1,35 @@
+2025-03-19	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
+
+	* KeyParaStocX 1.1.0:
+	  Skip the operation if the keyword or the new style are empty. Added
+	  error handling with an explanatory message. Improvements in reading
+	  the configuration. Added an initial unit test. Updates in the
+	  documentation. Updated copyright.
+	* KeyParaStocX/Process.xba (ChangeWordParaStyle, ChangeLastLevel):
+	  Skip the operation if the keyword or the new style are empty.
+	* KeyParaStocX/Process.xba (ChangeLastLevel, ChangeLastLevelSingleKey):
+	  Moved common code to a separate Function.
+	* KeyParaStocX/Process.xba (Main): Added error handling and displaying
+	  an explanatory message box on error.
+	* KeyParaStocX/Process.xba: Corrected the coding style.
+	* components/Config.py (get_default_language_code, get_language_code):
+	  Added functions to get the system language code or a fallback value.
+	* components/Config.py (getValueOrDefault): Changed getting the
+	  current locale.
+	* components/Config.py (handleExternalEvent): Simplified code.
+	* components/Config.py (main): Just display the Python path and
+	  version information.
+	* components/Config.py (loadDefaultData): Try to open the configuration
+	  file also from the current directory (for unit tests).
+	* components/Config.py: Use the default identifier in the component
+	  when the identifier was not provided from the build system (like
+	  when running unit tests). Code quality: renamed variables to conform
+	  to the coding style, improved exception handling, reduced duplicated
+	  strings.
+	* test/test_load.py: Added an initial unit test.
+	* Makefile: Added running unit tests.
+	* README*: Added Usage and Configuration, updated compatibility.
+
 2023-03-29	Bogdan Drozdowski <bogdro /AT* users . sourceforge . net>
 
 	* KeyParaStocX 1.0.1:
@@ -36,7 +68,7 @@
 	* Makefile: Add commands to insert the default configuration into the
 	  components/Config.py file.
 	* components/Config.py: Code clean-up and simplifications.
-	* KeyParaStocX-dialog/Options*: Added i18n to the options' dialog.
+	* KeyParaStocX-dialog/Options*: Added i18n to the options' dialogue.
 	* icons/KeyParaStocX-main-icon.svg: Added a separate icon for the
 	  Extension Manager.
 	* icons/KeyParaStocX-icon.svg: Added metadata.
